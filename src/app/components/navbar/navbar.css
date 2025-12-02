@@ -1,0 +1,11 @@
+#navbar-css{
+    background: var(--bs-navbar-bg);
+    font-family: monospace;
+    font-style: oblique;
+    letter-spacing: 1px;
+}
+
+#navbar-css .navbar-brand{
+    color: white;
+    font-size: 2rem;
+}

@@ -1,0 +1,35 @@
+.hero-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+.btn-custom {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}

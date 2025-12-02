@@ -1,0 +1,474 @@
+{
+  "users": [
+    {
+      "id": "ee53",
+      "fullName": "Madhav lehru",
+      "email": "madhavlehru@gmail.com",
+      "password": "Madhav1!"
+    }
+  ],
+  "vehicleDetails": [
+    {
+      "id": 1,
+      "name": "Toyota Camry",
+      "model": "Hybrid LE",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764249945/Gemini_Generated_Image_bmmrprbmmrprbmmr_3_qndtkg.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764249944/Gemini_Generated_Image_bmmrprbmmrprbmmr_df7cbs.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764249929/Gemini_Generated_Image_bmmrprbmmrprbmmr_2_lfvx4s.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764249881/Gemini_Generated_Image_bmmrprbmmrprbmmr_1_blhybs.png"
+      ],
+      "price": 2500000,
+      "currency": "INR",
+      "ageInShowroom": "3 months",
+      "inStock": true,
+      "shortDescription": "The Toyota Camry Hybrid combines luxury with fuel efficiency, featuring advanced safety systems and a spacious interior.",
+      "specifications": {
+        "engine": "2.5L 4-Cylinder Hybrid",
+        "power": "208 HP",
+        "torque": "221 Nm",
+        "fuelType": "Hybrid (Petrol + Electric)",
+        "transmission": "CVT Automatic",
+        "mileage": "23 km/l",
+        "topSpeed": "180 km/h",
+        "acceleration": "8.3 seconds (0-100 km/h)",
+        "seating": 5,
+        "bodyType": "Sedan",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4885 mm",
+        "width": "1840 mm",
+        "height": "1445 mm",
+        "wheelbase": "2825 mm",
+        "bootSpace": "524 liters"
+      },
+      "features": [
+        "Adaptive Cruise Control",
+        "Lane Departure Warning",
+        "9-inch Touchscreen Infotainment",
+        "Apple CarPlay & Android Auto",
+        "Leather Upholstery",
+        "Dual-zone Climate Control",
+        "8 Airbags"
+      ],
+      "detailedDescription": "The 2024 Toyota Camry Hybrid LE represents the perfect blend of sophistication, efficiency, and reliability..."
+    },
+    {
+      "id": 2,
+      "name": "Hyundai Creta",
+      "model": "SX (O) Turbo",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250205/Gemini_Generated_Image_37o9bo37o9bo37o9_xknhzj.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250213/Gemini_Generated_Image_qixiw2qixiw2qixi_na6jxo.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250213/Gemini_Generated_Image_i5tcl4i5tcl4i5tc_l6ae6l.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250216/Gemini_Generated_Image_27zadb27zadb27za_u11drn.png"
+      ],
+      "price": 1850000,
+      "currency": "USD",
+      "ageInShowroom": "1 month",
+      "inStock": true,
+      "shortDescription": "The 2024 Creta Turbo offers a powerful drive with premium interiors and modern tech.",
+      "specifications": {
+        "engine": "1.5L Turbo GDi",
+        "power": "160 HP",
+        "torque": "253 Nm",
+        "fuelType": "Petrol",
+        "transmission": "7-Speed DCT",
+        "mileage": "18 km/l",
+        "topSpeed": "195 km/h",
+        "acceleration": "8.9 seconds",
+        "seating": 5,
+        "bodyType": "SUV",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4300 mm",
+        "width": "1790 mm",
+        "height": "1635 mm",
+        "wheelbase": "2610 mm",
+        "bootSpace": "433 liters"
+      },
+      "features": [
+        "Panoramic Sunroof",
+        "Ventilated Seats",
+        "ADAS Level 1",
+        "10.25-inch Infotainment",
+        "Wireless Charging",
+        "Ambient Lighting",
+        "6 Airbags"
+      ],
+      "detailedDescription": "The Hyundai Creta Turbo SX (O) is engineered for thrill seekers who demand premium features..."
+    },
+    {
+      "id": 3,
+      "name": "Tata Nexon",
+      "model": "Fearless+ S DCA",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250580/Gemini_Generated_Image_46oedz46oedz46oe_jnrzeu.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250514/Gemini_Generated_Image_46oedz46oedz46oe_3_zsxdyr.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250525/Gemini_Generated_Image_46oedz46oedz46oe_1_auevhe.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250580/Gemini_Generated_Image_46oedz46oedz46oe_2_dipo1r.png"
+      ],
+      "price": 1500000,
+      "currency": "INR",
+      "ageInShowroom": "2 weeks",
+      "inStock": false,
+      "shortDescription": "India’s safest compact SUV, now with futuristic interiors and improved performance.",
+      "specifications": {
+        "engine": "1.2L Turbo Petrol",
+        "power": "120 HP",
+        "torque": "170 Nm",
+        "fuelType": "Petrol",
+        "transmission": "6-Speed DCA",
+        "mileage": "17 km/l",
+        "topSpeed": "180 km/h",
+        "acceleration": "10.8 seconds",
+        "seating": 5,
+        "bodyType": "Compact SUV",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "3995 mm",
+        "width": "1804 mm",
+        "height": "1620 mm",
+        "wheelbase": "2498 mm",
+        "bootSpace": "382 liters"
+      },
+      "features": [
+        "360° Camera",
+        "Wireless Android Auto & CarPlay",
+        "Digital Cockpit",
+        "Ventilated Seats",
+        "Sunroof",
+        "6 Airbags"
+      ],
+      "detailedDescription": "The new Tata Nexon brings cutting-edge technology with exceptional safety features..."
+    },
+    {
+      "id": 4,
+      "name": "Mahindra XUV700",
+      "model": "AX7L AWD Diesel",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250729/Gemini_Generated_Image_jat82gjat82gjat8_ub6pxf.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250732/Gemini_Generated_Image_jat82gjat82gjat8_1_vs0h6b.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250798/Gemini_Generated_Image_jat82gjat82gjat8_3_agfb5b.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250801/Gemini_Generated_Image_jat82gjat82gjat8_2_fhffay.png"
+      ],
+      "price": 2700000,
+      "currency": "INR",
+      "ageInShowroom": "4 months",
+      "inStock": true,
+      "shortDescription": "A spacious, powerful SUV equipped with advanced safety and AWD capability.",
+      "specifications": {
+        "engine": "2.2L mHawk Diesel",
+        "power": "185 HP",
+        "torque": "450 Nm",
+        "fuelType": "Diesel",
+        "transmission": "6-Speed Automatic",
+        "mileage": "15 km/l",
+        "topSpeed": "200 km/h",
+        "acceleration": "9.2 seconds",
+        "seating": 7,
+        "bodyType": "SUV",
+        "drivetrain": "AWD"
+      },
+      "dimensions": {
+        "length": "4695 mm",
+        "width": "1890 mm",
+        "height": "1755 mm",
+        "wheelbase": "2750 mm",
+        "bootSpace": "240 liters (expandable)"
+      },
+      "features": [
+        "ADAS Level 2",
+        "Panoramic Sunroof",
+        "Dual 10.25-inch Screens",
+        "Sony 3D Surround",
+        "All-Wheel Drive",
+        "7 Airbags"
+      ],
+      "detailedDescription": "The Mahindra XUV700 AX7L AWD is built for both power and comfort with cutting-edge technology..."
+    },
+    {
+      "id": 5,
+      "name": "Honda City",
+      "model": "ZX CVT",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250838/Gemini_Generated_Image_97rxc497rxc497rx_atjwfm.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250839/Gemini_Generated_Image_rlg22drlg22drlg2_cz1yv8.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250851/Gemini_Generated_Image_yq8pb7yq8pb7yq8p_ij6oaz.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764250853/Gemini_Generated_Image_8fuwho8fuwho8fuw_gsbwtq.png"
+      ],
+      "price": 1700000,
+      "currency": "INR",
+      "ageInShowroom": "6 weeks",
+      "inStock": true,
+      "shortDescription": "A premium sedan known for comfort, refinement, and Honda reliability.",
+      "specifications": {
+        "engine": "1.5L i-VTEC Petrol",
+        "power": "121 HP",
+        "torque": "145 Nm",
+        "fuelType": "Petrol",
+        "transmission": "CVT",
+        "mileage": "18.4 km/l",
+        "topSpeed": "190 km/h",
+        "acceleration": "10.4 seconds",
+        "seating": 5,
+        "bodyType": "Sedan",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4583 mm",
+        "width": "1748 mm",
+        "height": "1489 mm",
+        "wheelbase": "2600 mm",
+        "bootSpace": "506 liters"
+      },
+      "features": [
+        "LaneWatch Camera",
+        "Sunroof",
+        "LED Headlamps",
+        "Wireless CarPlay",
+        "Honda Sensing (ADAS)",
+        "6 Airbags"
+      ],
+      "detailedDescription": "The 2024 Honda City ZX CVT offers a luxurious interior, excellent mileage, and modern safety features..."
+    },
+    {
+      "id": 6,
+      "name": "Kia Seltos",
+      "model": "GT Line DCT",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251137/Gemini_Generated_Image_cx14ygcx14ygcx14_q48jro.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251139/Gemini_Generated_Image_cx14ygcx14ygcx14_1_pj7zr6.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251202/Gemini_Generated_Image_cx14ygcx14ygcx14_3_tjxgz9.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251202/Gemini_Generated_Image_cx14ygcx14ygcx14_2_a6ofoz.png"
+      ],
+      "price": 2000000,
+      "currency": "INR",
+      "ageInShowroom": "2 months",
+      "inStock": true,
+      "shortDescription": "The sporty Seltos GT Line offers premium features with an aggressive design.",
+      "specifications": {
+        "engine": "1.5L Turbo Petrol",
+        "power": "160 HP",
+        "torque": "253 Nm",
+        "fuelType": "Petrol",
+        "transmission": "7DCT",
+        "mileage": "17 km/l",
+        "topSpeed": "190 km/h",
+        "acceleration": "8.3 seconds",
+        "seating": 5,
+        "bodyType": "SUV",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4365 mm",
+        "width": "1800 mm",
+        "height": "1645 mm",
+        "wheelbase": "2610 mm",
+        "bootSpace": "433 liters"
+      },
+      "features": [
+        "Ventilated Seats",
+        "Panoramic Display",
+        "ADAS Level 2",
+        "Bose Audio",
+        "Sunroof",
+        "6 Airbags"
+      ],
+      "detailedDescription": "The Kia Seltos GT Line offers a thrilling driving experience matched with advanced safety tech..."
+    },
+    {
+      "id": 7,
+      "name": "Maruti Suzuki Grand Vitara",
+      "model": "Alpha+ Hybrid",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251245/Gemini_Generated_Image_22plgu22plgu22pl_s2tkpf.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251235/Gemini_Generated_Image_22plgu22plgu22pl_1_ocjzkx.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251298/Gemini_Generated_Image_22plgu22plgu22pl_3_kokbge.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251306/Gemini_Generated_Image_22plgu22plgu22pl_2_i1yiax.png"
+      ],
+      "price": 1950000,
+      "currency": "INR",
+      "ageInShowroom": "1 month",
+      "inStock": false,
+      "shortDescription": "A feature-packed hybrid SUV with best-in-class fuel economy.",
+      "specifications": {
+        "engine": "1.5L Strong Hybrid",
+        "power": "116 HP",
+        "torque": "141 Nm",
+        "fuelType": "Hybrid",
+        "transmission": "e-CVT",
+        "mileage": "27 km/l",
+        "topSpeed": "170 km/h",
+        "acceleration": "12 seconds",
+        "seating": 5,
+        "bodyType": "SUV",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4345 mm",
+        "width": "1795 mm",
+        "height": "1645 mm",
+        "wheelbase": "2600 mm",
+        "bootSpace": "373 liters"
+      },
+      "features": [
+        "Wireless CarPlay",
+        "ADAS (Limited)",
+        "Panoramic Sunroof",
+        "Heads-up Display",
+        "360° Camera",
+        "6 Airbags"
+      ],
+      "detailedDescription": "The Grand Vitara Hybrid is designed for efficiency without compromising luxury..."
+    },
+    {
+      "id": 8,
+      "name": "Skoda Slavia",
+      "model": "1.5 TSI DSG Style",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251529/Gemini_Generated_Image_wakrm5wakrm5wakr_mpkre2.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251509/Gemini_Generated_Image_wakrm5wakrm5wakr_1_zdwana.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251575/Gemini_Generated_Image_wakrm5wakrm5wakr_2_krv9be.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251566/Gemini_Generated_Image_wakrm5wakrm5wakr_3_totdcc.png"
+      ],
+      "price": 1800000,
+      "currency": "INR",
+      "ageInShowroom": "5 weeks",
+      "inStock": true,
+      "shortDescription": "A sporty sedan with German engineering and strong performance.",
+      "specifications": {
+        "engine": "1.5L TSI Petrol",
+        "power": "150 HP",
+        "torque": "250 Nm",
+        "fuelType": "Petrol",
+        "transmission": "7DCT",
+        "mileage": "19 km/l",
+        "topSpeed": "220 km/h",
+        "acceleration": "8.8 seconds",
+        "seating": 5,
+        "bodyType": "Sedan",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4541 mm",
+        "width": "1752 mm",
+        "height": "1507 mm",
+        "wheelbase": "2651 mm",
+        "bootSpace": "521 liters"
+      },
+      "features": [
+        "Ventilated Seats",
+        "Sunroof",
+        "Wireless SmartLink",
+        "6 Airbags",
+        "Digital Cockpit",
+        "TPMS"
+      ],
+      "detailedDescription": "The Skoda Slavia 1.5 TSI offers exceptional driving dynamics with premium comfort..."
+    },
+    {
+      "id": 9,
+      "name": "MG Hector",
+      "model": "Sharp Pro CVT",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251825/Gemini_Generated_Image_i9wf80i9wf80i9wf_oulmmr.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251825/Gemini_Generated_Image_i9wf80i9wf80i9wf_2_l30jsv.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251753/Gemini_Generated_Image_i9wf80i9wf80i9wf_1_hh92wo.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251807/Gemini_Generated_Image_i9wf80i9wf80i9wf_3_fb9zfu.png"
+      ],
+      "price": 2200000,
+      "currency": "INR",
+      "ageInShowroom": "3 months",
+      "inStock": true,
+      "shortDescription": "A large, feature-rich SUV with a commanding road presence.",
+      "specifications": {
+        "engine": "1.5L Turbo Petrol",
+        "power": "143 HP",
+        "torque": "250 Nm",
+        "fuelType": "Petrol",
+        "transmission": "CVT",
+        "mileage": "14 km/l",
+        "topSpeed": "170 km/h",
+        "acceleration": "12 seconds",
+        "seating": 5,
+        "bodyType": "SUV",
+        "drivetrain": "FWD"
+      },
+      "dimensions": {
+        "length": "4655 mm",
+        "width": "1835 mm",
+        "height": "1760 mm",
+        "wheelbase": "2750 mm",
+        "bootSpace": "587 liters"
+      },
+      "features": [
+        "14-inch Touchscreen",
+        "ADAS Level 2",
+        "Panoramic Sunroof",
+        "Wireless Charging",
+        "6 Airbags",
+        "360° Camera"
+      ],
+      "detailedDescription": "The MG Hector Sharp Pro CVT provides unmatched cabin space and powerful connectivity features..."
+    },
+    {
+      "id": 10,
+      "name": "Toyota Fortuner",
+      "model": "Legender 4x4 AT",
+      "year": 2024,
+      "images": [
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251861/Gemini_Generated_Image_4k128e4k128e4k12_io1vj1.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251924/Gemini_Generated_Image_4k128e4k128e4k12_1_gou0mx.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251897/Gemini_Generated_Image_4k128e4k128e4k12_2_dtzm5o.png",
+        "https://res.cloudinary.com/dwlm1th2p/image/upload/v1764251909/Gemini_Generated_Image_4k128e4k128e4k12_3_miqj3j.png"
+      ],
+      "price": 4600000,
+      "currency": "INR",
+      "ageInShowroom": "2 months",
+      "inStock": true,
+      "shortDescription": "A premium full-size SUV built for power, luxury, and off-road capability.",
+      "specifications": {
+        "engine": "2.8L Turbo Diesel",
+        "power": "204 HP",
+        "torque": "500 Nm",
+        "fuelType": "Diesel",
+        "transmission": "6-Speed Automatic",
+        "mileage": "12 km/l",
+        "topSpeed": "180 km/h",
+        "acceleration": "10 seconds",
+        "seating": 7,
+        "bodyType": "SUV",
+        "drivetrain": "4x4"
+      },
+      "dimensions": {
+        "length": "4795 mm",
+        "width": "1855 mm",
+        "height": "1835 mm",
+        "wheelbase": "2745 mm",
+        "bootSpace": "296 liters (expandable)"
+      },
+      "features": [
+        "Ventilated Seats",
+        "Premium JBL Audio",
+        "360° Camera",
+        "LED Projector Headlamps",
+        "ADAS (Limited)",
+        "7 Airbags"
+      ],
+      "detailedDescription": "The Toyota Fortuner Legender 4x4 delivers exceptional off-road performance with a luxurious cabin..."
+    }
+  ]
+}

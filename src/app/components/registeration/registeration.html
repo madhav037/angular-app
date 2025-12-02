@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+<div class="auth-card mx-auto mt-5">
+  <div class="text-center mb-3">
+    <h2 class="auth-title">Create Account</h2>
+    <p class="text-light">Join the Vehicle Showroom</p>
+  </div>
+
+  <form id="registrationForm" [formGroup]="registerationForm" (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label class="form-label text-light">Full Name</label>
+      <input
+        type="text"
+        formControlName="fullName"
+        class="form-control"
+        id="fullName"
+        placeholder="Ravi Sharma"
+      />
+      @if (registerationForm.controls['fullName'].touched && registerationForm.controls['fullName'].invalid) {
+      <p class="text-danger fw-semibold" id="fullNameError">FullName is Required</p>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-light">Email</label>
+      <input
+        type="email"
+        formControlName="email"
+        class="form-control"
+        id="email"
+        placeholder="you@example.com"
+      />
+      @if (registerationForm.controls['email'].touched && registerationForm.controls['email'].invalid) {
+      <p class="text-danger fw-semibold" id="emailError">Valid Email is Required</p>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-light">Password</label>
+      <input
+        type="password"
+        formControlName="password"
+        class="form-control"
+        id="password"
+        (input)="updateStrengthBar()"
+        placeholder="********"
+      />
+      <div
+        id="strengthBar"
+        style="
+          height: 6px;
+          width: 100%;
+          background: #ddd;
+          border-radius: 3px;
+          margin-top: 8px;
+          overflow: hidden;
+        "
+      >
+        <div id="strengthFill" style="height: 100%; width: 0%; transition: width 0.3s"></div>
+      </div>
+
+      <small id="strengthText" class="mt-2 d-block fw-semibold"></small>
+      @if (registerationForm.controls['password'].touched && registerationForm.controls['password'].dirty) { @if
+      (registerationForm.controls['password'].hasError('required')) {
+      <p class="text-danger fw-semibold" id="passwordError">Password is Required</p>
+      } @else if (registerationForm.controls['password'].hasError('minlength')) {
+      <p class="text-danger fw-semibold" id="passwordError">
+        Password must be at least 8 characters
+      </p>
+      } @else if (registerationForm.controls['password'].hasError('pattern')) {
+      <p class="text-danger fw-semibold" id="passwordError">
+        Password must include uppercase, lowercase, number, and special characters
+      </p>
+      } }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-light">Confirm Password</label>
+      <input
+        type="password"
+        formControlName="confirmPassword"
+        class="form-control"
+        id="confirmPassword"
+        placeholder="********"
+      />
+      @if (registerationForm.controls.confirmPassword.errors?.['passwordMismatch'] &&
+      registerationForm.controls['confirmPassword'].touched) {
+      <p class="text-danger fw-semibold" id="confirmPasswordError">Passwords do not match</p>
+      }
+    </div>
+
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="termsCheck"
+        formControlName="termsCheck"
+      />
+      <label class="form-check-label text-light" for="termsCheck">
+        I agree to the Terms & Conditions
+      </label>
+      @if (registerationForm.controls['termsCheck'].touched && registerationForm.controls['termsCheck'].invalid) {
+      <p class="text-danger fw-semibold" id="termsError">You must agree to the terms</p>
+      }
+    </div>
+
+    <button class="btn btn-light w-100 fw-semibold py-2" id="submitBtn" type="submit">
+      Register
+    </button>
+
+    <div class="mt-3">
+      <nav class="text-center">
+        <a [routerLink]="['/login']" class="text-light opacity-75">
+          Already have an account? Login
+        </a>
+      </nav>
+    </div>
+  </form>
+</div>

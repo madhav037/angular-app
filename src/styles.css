@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bs-body-bg: #014283;
+  --bs-navbar-bg: linear-gradient(to bottom, #334155, #1e293b);
+
+}
+
+body {
+  background: linear-gradient(to bottom, #1e293b, #0f172a);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+} 
+
+footer {
+  text-align: center;
+  padding: 15px;
+  color: #dce4ec;
+  font-size: 0.9rem;
+}
+
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+.toast {
+  z-index: 100000 !important;
+}
+
+#global-toast-container {
+  z-index: 99999 !important;
+  position: fixed !important;
+}
