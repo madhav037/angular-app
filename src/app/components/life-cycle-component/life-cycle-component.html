@@ -1,0 +1,10 @@
+<p>life-cycle-component works!</p>
+<div #viewChildBox style="padding:10px; border:1px solid #555;">
+  <h3>Lifecycle Demo Component</h3>
+
+  <p><strong>Input name:</strong> {{ username()! }}</p>
+
+  <ng-content></ng-content>
+
+  <p>Interval count (ngOnInit): {{ resizeCount }}</p>
+</div>

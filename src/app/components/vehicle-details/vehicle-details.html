@@ -1,26 +1,26 @@
 <app-navbar></app-navbar>
 <main>
   <section class="text-center py-4 mb-4 mx-5 d-flex align-items-center justify-content-between">
-    <nav><a [routerLink]="['/dashboard']" class="btn btn-secondary text-light" > Back</a></nav>
+    <nav><a [routerLink]="['/dashboard']" class="btn btn-secondary text-light"> Back</a></nav>
     <div>
-        <h1>{{ vehicleData?.name }}</h1>
-        <h4 class="text-muted">{{ vehicleData?.model }} - {{ vehicleData?.year }}</h4>
+      <h1>{{ vehicleData()?.name }}</h1>
+      <h4 class="text-muted">{{ vehicleData()?.model }} - {{ vehicleData()?.year }}</h4>
     </div>
 
-    <nav><a [routerLink]="['']" class="btn btn-secondary text-light" > Contact Us</a></nav>
+    <nav><a [routerLink]="['']" class="btn btn-secondary text-light"> Contact Us</a></nav>
   </section>
-  @if (vehicleData) {
+  @if (vehicleData()) {
   <section class="px-5">
     <div
-      [id]="'carousel-' + vehicleData.id"
+      [id]="'carousel-' + vehicleData()!.id"
       class="carousel slide carousel-fade"
       data-bs-ride="carousel"
     >
       <div class="carousel-indicators">
-        @for (image of vehicleData.images; let j = $index; track image) {
+        @for (image of vehicleData()!.images; let j = $index; track image) {
         <button
           type="button"
-          [attr.data-bs-target]="'#carousel-' + vehicleData.id"
+          [attr.data-bs-target]="'#carousel-' + vehicleData()!.id"
           [attr.data-bs-slide-to]="j"
           [class.active]="j === 0"
           aria-current="true"
@@ -29,12 +29,12 @@
         }
       </div>
       <div class="carousel-inner">
-        @for (image of vehicleData.images; let i = $index; track image) {
+        @for (image of vehicleData()!.images; let i = $index; track image) {
         <div class="carousel-item" [class.active]="i === 0">
           <img
             [src]="image"
             class="card-img-top d-block w-100"
-            [alt]="vehicleData.name"
+            [alt]="vehicleData()!.name"
             style="height: 550px; object-fit: cover"
           />
         </div>
@@ -43,7 +43,7 @@
       <button
         class="carousel-control-prev"
         type="button"
-        [attr.data-bs-target]="'#carousel-' + vehicleData.id"
+        [attr.data-bs-target]="'#carousel-' + vehicleData()!.id"
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -52,7 +52,7 @@
       <button
         class="carousel-control-next"
         type="button"
-        [attr.data-bs-target]="'#carousel-' + vehicleData.id"
+        [attr.data-bs-target]="'#carousel-' + vehicleData()!.id"
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -70,16 +70,20 @@
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">{{ item }}</h6>
           <p class="mb-0 fw-bold fs-5">
-            {{ vehicleData?.[item] }}
+            {{ vehicleData()!.[item] }}
           </p>
         </div>
       </div>
       } -->
       <div class="col">
-        <div class="bg-secondary p-4 rounded h-100" [class.bg-secondary]="vehicleData?.inStock" [class.bg-warning]="!vehicleData?.inStock">
+        <div
+          class="bg-secondary p-4 rounded h-100"
+          [class.bg-secondary]="vehicleData()!.inStock"
+          [class.bg-warning]="!vehicleData()!.inStock"
+        >
           <h6 class="text-uppercase text-dark fw-bold mb-2">In Stock</h6>
           <p class="mb-0 fw-bold fs-5">
-            {{ vehicleData?.inStock == true ? 'Yes' : 'No' }}
+            {{ vehicleData()!.inStock == true ? 'Yes' : 'No' }}
           </p>
         </div>
       </div>
@@ -87,34 +91,34 @@
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Age in Showroom</h6>
           <p class="mb-0 fw-bold fs-5">
-            {{ vehicleData?.ageInShowroom || 'N/A' }}
+            {{ vehicleData()!.ageInShowroom || 'N/A' }}
           </p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Mileage</h6>
-          <p class="mb-0 fw-bold fs-5">{{ vehicleData?.specifications?.mileage || 'N/A' }} km</p>
+          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specifications!.mileage || 'N/A' }} km</p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Fuel Type</h6>
-          <p class="mb-0 fw-bold fs-5">{{ vehicleData?.specifications?.fuelType || 'N/A' }}</p>
+          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specifications!.fuelType || 'N/A' }}</p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Transmission</h6>
           <p class="mb-0 fw-bold fs-5">
-            {{ vehicleData?.specifications?.transmission }}
+            {{ vehicleData()!.specifications!.transmission }}
           </p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Body Type</h6>
-          <p class="mb-0 fw-bold fs-5">{{ vehicleData?.specifications?.bodyType || 'N/A' }}</p>
+          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specifications!.bodyType || 'N/A' }}</p>
         </div>
       </div>
     </div>
@@ -142,8 +146,8 @@
           <div class="accordion-body bg-dark text-white">
             <table class="table table-dark table-hover">
               <tbody>
-                @for (specification of vehicleData?.specifications | keyvalue; track specification)
-                {
+                @for (specification of vehicleData()!.specifications | keyvalue; track
+                specification) {
                 <tr>
                   <td class="fw-semibold" style="width: 40%">
                     {{ specification.key | titlecase }}
@@ -176,7 +180,7 @@
           <div class="accordion-body bg-dark text-white">
             <table class="table table-dark table-hover">
               <tbody>
-                @for (dimentions of vehicleData?.dimensions | keyvalue; track dimentions) {
+                @for (dimentions of vehicleData()!.dimensions | keyvalue; track dimentions) {
                 <tr>
                   <td class="fw-semibold" style="width: 40%">{{ dimentions.key | titlecase }}</td>
                   <td>{{ dimentions.value || 'N/A' }}</td>
@@ -188,7 +192,7 @@
         </div>
       </div>
 
-      @if (vehicleData?.features && vehicleData?.features!.length > 0) {
+      @if (vehicleData()!.features && vehicleData()!.features!.length > 0) {
       <div class="accordion-item bg-dark border-secondary mb-2">
         <h2 class="accordion-header">
           <button
@@ -206,7 +210,7 @@
           data-bs-parent="#specificationsAccordion"
         >
           <div class="accordion-body bg-dark text-white">
-            @for (feature of vehicleData?.features; track feature) {
+            @for (feature of vehicleData()!.features; track feature) {
             <div class="d-flex align-items-center p-2 m-2 bg-secondary rounded">
               <i class="bi bi-check-circle-fill text-success m-2"></i>
               <span>{{ feature }}</span>
@@ -235,7 +239,7 @@
         >
           <div class="accordion-body bg-dark text-white">
             <p class="mb-0" style="line-height: 1.8; text-align: justify">
-              {{ vehicleData?.detailedDescription || 'No detailed description available' }}
+              {{ vehicleData()!.detailedDescription || 'No detailed description available' }}
             </p>
           </div>
         </div>

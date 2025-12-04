@@ -1,0 +1,5 @@
+<p>parent-life-cycle-component works!</p>
+<input type="text" [(ngModel)]="username" placeholder="Enter username" />
+<app-life-cycle-component [username]="username">
+    <p #parentContent >This is some content</p>
+</app-life-cycle-component>

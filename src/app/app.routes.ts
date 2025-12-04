@@ -6,6 +6,7 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 import { VehicleDetails } from './components/vehicle-details/vehicle-details';
 import { autoLoginGuard } from './guards/auto-login-guard';
+import { LifeCycleComponent } from './components/life-cycle-component/life-cycle-component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,22 @@ export const routes: Routes = [
     path: 'vehicleDetail/:id',
     component: VehicleDetails,
     canActivate: [authGuard],
+  },
+  {
+    path: 'lifecycledemo',
+    children: [
+      {
+        path: 'parent',
+        loadComponent: () =>
+          import('./components/parent-life-cycle-component/parent-life-cycle-component').then(
+            (m) => m.ParentLifeCycleComponent
+          ),
+      },
+      {
+        path: 'child',
+        component: LifeCycleComponent,
+      },
+    ],
   },
   {
     path: '**',
