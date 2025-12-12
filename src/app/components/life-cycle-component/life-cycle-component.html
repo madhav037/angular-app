@@ -1,5 +1,5 @@
 <p>life-cycle-component works!</p>
-<div #viewChildBox style="padding:10px; border:1px solid #555;">
+<div #viewChildBox style="padding: 10px; border: 1px solid #555">
   <h3>Lifecycle Demo Component</h3>
 
   <p><strong>Input name:</strong> {{ username()! }}</p>
@@ -8,3 +8,5 @@
 
   <p>Interval count (ngOnInit): {{ resizeCount }}</p>
 </div>
+
+<button (click)="notifyParent()">Send Reply to Parent</button>

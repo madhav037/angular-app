@@ -9,5 +9,11 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './parent-life-cycle-component.css',
 })
 export class ParentLifeCycleComponent {
-  username: string = '';
+  username: string = 'username';
+
+  childReply: string = '';  
+
+  handleReply(message: string) {
+    this.childReply = message;
+  }
 }

@@ -7,9 +7,12 @@ import {
   contentChild,
   DoCheck,
   ElementRef,
+  EventEmitter,
   input,
   OnDestroy,
   OnInit,
+  Output,
+  output,
   SimpleChanges,
   viewChild,
 } from '@angular/core';
@@ -31,6 +34,10 @@ export class LifeCycleComponent
     OnDestroy
 {
   username = input<string>('');
+
+  // reply = output<EventEmitter<string>>();
+  @Output() reply = new EventEmitter<string>();
+
   parentElement = contentChild<ElementRef>('parentContent');
   viewBox = viewChild<ElementRef>('viewChildBox');
 
@@ -40,6 +47,10 @@ export class LifeCycleComponent
 
   constructor() {
     console.log('Constructor: Component is being constructed');
+  }
+
+  notifyParent() {
+    this.reply.emit(`Hello from LifeCycleComponent, ${this.username()}`);
   }
 
   ngAfterContentInit(): void {

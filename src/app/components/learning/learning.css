@@ -1,0 +1,18 @@
+.card {
+  border: 1px solid #ccc;
+  color: black;
+  padding: 1rem;
+  container-type: inline-size;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+@container (max-width: 1210px) {
+  .content {
+    flex-direction: column;
+  }
+}

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, effect, inject, signal } from '@angular/core';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
 import { Vehicle } from '../../services/vehicle';
 import { Navbar } from '../navbar/navbar';
@@ -20,7 +20,8 @@ export class Dashboard {
   private cdr = inject(ChangeDetectorRef);
 
   vehicles: vehicleDetails[] = [];
-  filteredVehicles: vehicleDetails[] = [];
+  filteredVehicles = signal<vehicleDetails[]>([]);
+  numberOfVehicles = computed(() => this.filteredVehicles().length);
 
   searchTerm: string = '';
   stockFilter: string = '';
@@ -28,19 +29,18 @@ export class Dashboard {
   sortBy: string = 'newest';
 
   constructor() {
-    // console.log('Dashboard initialized');
-    // this.vehicleService.getVehicles().subscribe({
-    //   next: (v: vehicleDetails[]) => {
-    //     console.log('Vehicles loaded:', v);
-    //     this.vehicles = v;
-    //     this.filteredVehicles = v;
-    //   },
-    //   error: (err: any) => {
-    //     this.toast.show(`Failed to load vehicles ${err.message}`, 'error' );
-    //     this.vehicles = [];
-    //   },
-    // });
+    console.log('Dashboard initialized');
+
+    effect(() => {
+      console.log('Filters changed:', {
+        searchTerm: this.searchTerm,
+        stockFilter: this.stockFilter,
+        priceRange: this.priceRange,
+        sortBy: this.sortBy,
+      });
+    });
   }
+
 
   getLocale(currency: string): string {
     currency = currency.toUpperCase();
@@ -55,7 +55,7 @@ export class Dashboard {
       next: (v: vehicleDetails[]) => {
         console.log('Vehicles loaded:', v);
         this.vehicles = v;
-        this.filteredVehicles = v;
+        this.filteredVehicles.set(v);
         this.cdr.detectChanges();
       },
       error: (err: any) => {
@@ -95,7 +95,7 @@ export class Dashboard {
       );
     }
 
-    this.filteredVehicles = results;
+    this.filteredVehicles.set(results);
     this.cdr.detectChanges();
   }
 
@@ -104,7 +104,7 @@ export class Dashboard {
     this.stockFilter = '';
     this.priceRange = { start: 100000, end: 10000000 };
     this.sortBy = 'newest';
-    this.filteredVehicles = [...this.vehicles];
+    this.filteredVehicles.set([...this.vehicles]);
     this.cdr.detectChanges();
   }
 }

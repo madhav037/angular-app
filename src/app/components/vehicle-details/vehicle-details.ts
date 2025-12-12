@@ -24,6 +24,7 @@ export class VehicleDetails {
     });
     this.vehicleService.getVehicleById(this.vehicleId).subscribe({
       next: (data: vehicleDetails) => {
+        
         this.vehicleData.set(data);
         console.log('Vehicle details loaded:', data);
       },

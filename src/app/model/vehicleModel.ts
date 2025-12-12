@@ -9,7 +9,7 @@ export interface vehicleDetails {
   ageInShowroom: string;
   inStock: boolean;
   shortDescription: string;
-  specifications: {
+  specification: {
     engine: string;
     power: string;
     torque: string;
@@ -22,7 +22,7 @@ export interface vehicleDetails {
     bodyType: string;
     drivetrain: string;
   };
-  dimensions: {
+  dimension: {
     length: string;
     width: string;
     height: string;

@@ -7,6 +7,8 @@ import { authGuard } from './guards/auth-guard';
 import { VehicleDetails } from './components/vehicle-details/vehicle-details';
 import { autoLoginGuard } from './guards/auto-login-guard';
 import { LifeCycleComponent } from './components/life-cycle-component/life-cycle-component';
+import { BigComponent } from './components/big-component/big-component';
+// import { BigComponent } from './components/big-component/big-component';
 
 export const routes: Routes = [
   {
@@ -26,13 +28,21 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: Dashboard,
+    // component: Dashboard,
+    loadComponent: () => import('./components/dashboard/dashboard').then((m) => m.Dashboard),
     canActivate: [authGuard],
   },
   {
     path: 'vehicleDetail/:id',
-    component: VehicleDetails,
+    loadComponent: () =>
+      import('./components/vehicle-details/vehicle-details').then((m) => m.VehicleDetails),
     canActivate: [authGuard],
+  },
+  {
+    path: 'bigcomponent',
+    // component: BigComponent,
+    loadComponent: () =>
+      import('./components/big-component/big-component').then((m) => m.BigComponent),
   },
   {
     path: 'lifecycledemo',
@@ -49,6 +59,10 @@ export const routes: Routes = [
         component: LifeCycleComponent,
       },
     ],
+  },
+  {
+    path: 'learning',
+    loadComponent: () => import('./components/learning/learning').then((m) => m.Learning),
   },
   {
     path: '**',

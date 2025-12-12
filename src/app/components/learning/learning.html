@@ -1,0 +1,24 @@
+<p>learning works!</p>
+<input [(ngModel)]="username" placeholder="Enter your username" />
+<button (click)="username = ''">Clear Username</button>
+<p>Your username is: {{ username }}</p>
+
+<button (click)="toggle()">To toggle custom directive</button>
+<div *appCustomDirective="toggleDirectiveCondition">
+  <p>This is displayed with help of custom directive</p>
+</div>
+<fieldset style="padding: 10px 15px">
+  <legend>Dashed Sentence Example</legend>
+  <label>{{ 'this was a non dashed sentence' | addDash }}</label>
+</fieldset>
+
+<div class="card">
+  <div class="content">
+    <h3>Title</h3>
+    <p>Description text here 1</p>
+    <p>Description text here 2</p>
+    <p>Description text here 3</p>
+    <p>Description text here 4</p>
+    <p>Description text here 5</p>
+  </div>
+</div>

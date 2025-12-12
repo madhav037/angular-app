@@ -58,13 +58,13 @@ export class Registeration {
     let strength = 0;
     if (password.length == 0) strength = 0;
     if (password.length >= 3) strength++;
-    if (password.length >= 5) strength ++;
-    if (password.length >= 8) strength ++;
-    if (password.length >= 12) strength ++;
-    if (/[A-Z]/.test(password)) strength ++;
+    if (password.length >= 5) strength++;
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+    if (/[A-Z]/.test(password)) strength++;
     if (/[a-z]/.test(password)) strength++;
-    if (/\d/.test(password)) strength +=2;
-    if (/[@_!#$*%]/.test(password)) strength +=2;
+    if (/\d/.test(password)) strength += 2;
+    if (/[@_!#$*%]/.test(password)) strength += 2;
 
     if (strengthBar && strengthText) {
       switch (strength) {

@@ -41,26 +41,34 @@ export class Login {
     };
 
     this.authService.getUserByEmail(payload.email).subscribe({
-      next: (users: any) => {
-        if (users.length === 0) {
+      next: (responseUser: any) => {
+        if (!responseUser) {
           this.toast.show('Invalid email or password.', 'error');
           return;
         }
 
-        const user = users[0];
+        const user = responseUser;
         if (user.password !== payload.password) {
           this.toast.show('Invalid email or password.', 'error');
           return;
         }
 
-        if (this.loginForm.value.rememberMe) {
-          localStorage.setItem('loggedInUser', JSON.stringify(user));
-        } else {
-          sessionStorage.setItem('loggedInUser', JSON.stringify(user));
-        }
-
-        this.toast.show('Login Successful!', 'success');
-        this.router.navigate(['/dashboard']);
+        
+        this.authService.loginUser(payload.email, payload.password).subscribe(
+          (response) => {
+            let tokeneduser = { ...user, token: (response as any).token };
+            if (this.loginForm.value.rememberMe) {
+              localStorage.setItem('loggedInUser', JSON.stringify(tokeneduser));
+            } else {
+              sessionStorage.setItem('loggedInUser', JSON.stringify(tokeneduser));
+            }
+            this.toast.show('Login Successful!', 'success');
+            this.router.navigate(['/dashboard']);
+          },
+          (error) => {
+            console.error('Login error:', error);
+          }
+        );
       },
       error: (error) => {
         console.error('Error during login:', error);

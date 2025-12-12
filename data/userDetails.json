@@ -1,10 +1,124 @@
 {
   "users": [
     {
-      "id": "ee53",
-      "fullName": "Madhav lehru",
-      "email": "madhavlehru@gmail.com",
-      "password": "Madhav1!"
+      "id": "u001",
+      "fullName": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "password": "Aarav@123"
+    },
+    {
+      "id": "u002",
+      "fullName": "Riya Patel",
+      "email": "riya.patel@example.com",
+      "password": "Riya#456"
+    },
+    {
+      "id": "u003",
+      "fullName": "Karan Mehta",
+      "email": "karan.mehta@example.com",
+      "password": "Karan$789"
+    },
+    {
+      "id": "u004",
+      "fullName": "Sneha Verma",
+      "email": "sneha.verma@example.com",
+      "password": "Sneha@321"
+    },
+    {
+      "id": "u005",
+      "fullName": "Rohan Gupta",
+      "email": "rohan.gupta@example.com",
+      "password": "Rohan#555"
+    },
+    {
+      "id": "u006",
+      "fullName": "Isha Nair",
+      "email": "isha.nair@example.com",
+      "password": "Isha$889"
+    },
+    {
+      "id": "u007",
+      "fullName": "Vivaan Singh",
+      "email": "vivaan.singh@example.com",
+      "password": "Vivaan@001"
+    },
+    {
+      "id": "u008",
+      "fullName": "Diya Desai",
+      "email": "diya.desai@example.com",
+      "password": "Diya#777"
+    },
+    {
+      "id": "u009",
+      "fullName": "Aditya Joshi",
+      "email": "aditya.joshi@example.com",
+      "password": "Aditya$909"
+    },
+    {
+      "id": "u010",
+      "fullName": "Kavya Reddy",
+      "email": "kavya.reddy@example.com",
+      "password": "Kavya@555"
+    },
+    {
+      "id": "u011",
+      "fullName": "Manav Kapoor",
+      "email": "manav.kapoor@example.com",
+      "password": "Manav#222"
+    },
+    {
+      "id": "u012",
+      "fullName": "Sara Khan",
+      "email": "sara.khan@example.com",
+      "password": "Sara$444"
+    },
+    {
+      "id": "u013",
+      "fullName": "Harsh Trivedi",
+      "email": "harsh.trivedi@example.com",
+      "password": "Harsh@876"
+    },
+    {
+      "id": "u014",
+      "fullName": "Ananya Rao",
+      "email": "ananya.rao@example.com",
+      "password": "Ananya#333"
+    },
+    {
+      "id": "u015",
+      "fullName": "Siddharth Malhotra",
+      "email": "siddharth.malhotra@example.com",
+      "password": "Sid$101"
+    },
+    {
+      "id": "u016",
+      "fullName": "Priya Menon",
+      "email": "priya.menon@example.com",
+      "password": "Priya@919"
+    },
+    {
+      "id": "u017",
+      "fullName": "Arjun Bhat",
+      "email": "arjun.bhat@example.com",
+      "password": "Arjun#606"
+    },
+    {
+      "id": "u018",
+      "fullName": "Neha Kulkarni",
+      "email": "neha.kulkarni@example.com",
+      "password": "Neha$808"
+    },
+    {
+      "id": "u019",
+      "fullName": "Yash Agarwal",
+      "email": "yash.agarwal@example.com",
+      "password": "Yash@712"
+    },
+    {
+      "id": "u020",
+      "fullName": "Tanvi Shah",
+      "email": "tanvi.shah@example.com",
+      "password": "Tanvi#909"
     }
   ],
   "vehicleDetails": [

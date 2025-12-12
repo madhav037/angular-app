@@ -98,27 +98,27 @@
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Mileage</h6>
-          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specifications!.mileage || 'N/A' }} km</p>
+          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specification!.mileage || 'N/A' }} km</p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Fuel Type</h6>
-          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specifications!.fuelType || 'N/A' }}</p>
+          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specification!.fuelType || 'N/A' }}</p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Transmission</h6>
           <p class="mb-0 fw-bold fs-5">
-            {{ vehicleData()!.specifications!.transmission }}
+            {{ vehicleData()!.specification!.transmission }}
           </p>
         </div>
       </div>
       <div class="col">
         <div class="bg-secondary p-4 rounded h-100">
           <h6 class="text-uppercase text-dark fw-bold mb-2">Body Type</h6>
-          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specifications!.bodyType || 'N/A' }}</p>
+          <p class="mb-0 fw-bold fs-5">{{ vehicleData()!.specification!.bodyType || 'N/A' }}</p>
         </div>
       </div>
     </div>
@@ -146,7 +146,7 @@
           <div class="accordion-body bg-dark text-white">
             <table class="table table-dark table-hover">
               <tbody>
-                @for (specification of vehicleData()!.specifications | keyvalue; track
+                @for (specification of vehicleData()!.specification | keyvalue; track
                 specification) {
                 <tr>
                   <td class="fw-semibold" style="width: 40%">
@@ -180,7 +180,7 @@
           <div class="accordion-body bg-dark text-white">
             <table class="table table-dark table-hover">
               <tbody>
-                @for (dimentions of vehicleData()!.dimensions | keyvalue; track dimentions) {
+                @for (dimentions of vehicleData()!.dimension | keyvalue; track dimentions) {
                 <tr>
                   <td class="fw-semibold" style="width: 40%">{{ dimentions.key | titlecase }}</td>
                   <td>{{ dimentions.value || 'N/A' }}</td>

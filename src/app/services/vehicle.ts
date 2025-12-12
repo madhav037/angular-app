@@ -12,7 +12,7 @@ export class Vehicle {
   http = inject(HttpClient);
   router = inject(Router);
 
-  readonly baseApiUrl = environment.APIURL + '/vehicleDetails';
+  readonly baseApiUrl = environment.APIURL + '/vehicle';
 
   getVehicles(): Observable<vehicleDetails[]> {
     return this.http.get<vehicleDetails[]>(`${this.baseApiUrl}`);
@@ -22,7 +22,7 @@ export class Vehicle {
     return this.http.get<vehicleDetails>(`${this.baseApiUrl}/${id}`);
   }
 
-  searchVehicles(category: 'name' | 'model', query: string) {
-    return this.http.get(`${this.baseApiUrl}?_fields=${category}`);
-  }
+  // searchVehicles(category: 'name' | 'model', query: string) {
+  //   return this.http.get(`${this.baseApiUrl}?_fields=${category}`);
+  // }
 }

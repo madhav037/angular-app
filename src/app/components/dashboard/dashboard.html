@@ -75,14 +75,14 @@
 
     <div class="mt-3 pt-3 border-top">
       <small>
-        Showing <strong>{{ filteredVehicles!.length }}</strong> vehicles
+        Showing <strong>{{ numberOfVehicles() }}</strong> vehicles
       </small>
     </div>
   </div>
 
   <div class="container py-1 mx-auto px-0">
     <div class="row g-4">
-      @for (vehicle of filteredVehicles; track vehicle.id) {
+      @for (vehicle of filteredVehicles(); track vehicle.id) {
       <div class="col-12 col-sm-6 col-lg-4">
         <div
           class="card h-100 shadow-sm border-0 hover-card"
