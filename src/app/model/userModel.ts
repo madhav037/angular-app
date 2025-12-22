@@ -3,4 +3,6 @@ export interface User {
     fullName: string;
     email: string;
     password: string;
+    refreshToken?: string;
+    refreshTokenExpiryTime?: Date;
 }

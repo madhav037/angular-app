@@ -35,46 +35,16 @@ export class Login {
       return;
     }
 
-    const payload = {
-      email: this.loginForm.value.email!,
-      password: this.loginForm.value.password!,
-    };
+    const { email, password, rememberMe } = this.loginForm.value;
 
-    this.authService.getUserByEmail(payload.email).subscribe({
-      next: (responseUser: any) => {
-        if (!responseUser) {
-          this.toast.show('Invalid email or password.', 'error');
-          return;
-        }
-
-        const user = responseUser;
-        if (user.password !== payload.password) {
-          this.toast.show('Invalid email or password.', 'error');
-          return;
-        }
-
-        
-        this.authService.loginUser(payload.email, payload.password).subscribe(
-          (response) => {
-            let tokeneduser = { ...user, token: (response as any).token };
-            if (this.loginForm.value.rememberMe) {
-              localStorage.setItem('loggedInUser', JSON.stringify(tokeneduser));
-            } else {
-              sessionStorage.setItem('loggedInUser', JSON.stringify(tokeneduser));
-            }
-            this.toast.show('Login Successful!', 'success');
-            this.router.navigate(['/dashboard']);
-          },
-          (error) => {
-            console.error('Login error:', error);
-          }
-        );
+    this.authService.loginUser(email!, password!, rememberMe!).subscribe({
+      next: () => {
+        this.toast.show('Login Successful!', 'success');
+        this.router.navigate(['/dashboard']);
       },
-      error: (error) => {
-        console.error('Error during login:', error);
+      error: () => {
+        this.toast.show('Invalid email or password', 'error');
       },
     });
-
-    console.log('Sending payload:', payload);
   }
 }

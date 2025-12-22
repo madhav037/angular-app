@@ -1,110 +1,134 @@
-import { ChangeDetectorRef, Component, computed, effect, inject, signal } from '@angular/core';
-import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { CurrencyPipe, UpperCasePipe, NgIf, AsyncPipe } from '@angular/common';
 import { Vehicle } from '../../services/vehicle';
 import { Navbar } from '../navbar/navbar';
 import { ToastService } from '../../services/toast';
-import { vehicleDetails } from '../../model/vehicleModel';
+import { vehicleDetails, VehicleFilterDto } from '../../model/vehicleModel';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
+import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Navbar, RouterLink, CurrencyPipe, UpperCasePipe, FormsModule, MatSliderModule],
+  imports: [
+    Navbar,
+    RouterLink,
+    CurrencyPipe,
+    UpperCasePipe,
+    FormsModule,
+    MatSliderModule,
+    NgIf,
+    AsyncPipe,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnInit, OnDestroy {
   private vehicleService = inject(Vehicle);
   private toast = inject(ToastService);
-  private cdr = inject(ChangeDetectorRef);
 
   vehicles: vehicleDetails[] = [];
   filteredVehicles = signal<vehicleDetails[]>([]);
   numberOfVehicles = computed(() => this.filteredVehicles().length);
 
-  searchTerm: string = '';
-  stockFilter: string = '';
+  loading$ = new BehaviorSubject<boolean>(true);
+
+  searchTerm = '';
+  stockFilter = '';
+  year = 0;
   priceRange = { start: 100000, end: 10000000 };
-  sortBy: string = 'newest';
 
-  constructor() {
-    console.log('Dashboard initialized');
-
-    effect(() => {
-      console.log('Filters changed:', {
-        searchTerm: this.searchTerm,
-        stockFilter: this.stockFilter,
-        priceRange: this.priceRange,
-        sortBy: this.sortBy,
-      });
-    });
-  }
-
-
-  getLocale(currency: string): string {
-    currency = currency.toUpperCase();
-
-    if (currency === 'INR') return 'hi-IN';
-    return 'en-US';
-  }
+  private filterChange$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    console.log('Dashboard initialized');
+    this.loadAllVehicles();
+
+    this.filterChange$.pipe(debounceTime(800), takeUntil(this.destroy$)).subscribe(() => {
+      this.applyFilters();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  onFilterChanged() {
+    this.filterChange$.next();
+  }
+
+  private loadAllVehicles() {
+    this.loading$.next(true);
+
     this.vehicleService.getVehicles().subscribe({
-      next: (v: vehicleDetails[]) => {
-        console.log('Vehicles loaded:', v);
-        this.vehicles = v;
-        this.filteredVehicles.set(v);
-        this.cdr.detectChanges();
+      next: (vehicles) => {
+        this.vehicles = vehicles;
+        this.filteredVehicles.set(vehicles);
+        this.loading$.next(false);
       },
-      error: (err: any) => {
+      error: (err) => {
         this.toast.show(`Failed to load vehicles ${err.message}`, 'error');
-        this.vehicles = [];
+        this.loading$.next(false);
       },
     });
   }
 
-  // ngDoCheck() {
-  //   this.applyFilters();
-  // }
-
   applyFilters() {
-    let results = [...this.vehicles];
+    if (!this.hasActiveFilters()) {
+      this.filteredVehicles.set(this.vehicles);
+      return;
+    }
+
+    const filter: VehicleFilterDto = {};
 
     if (this.searchTerm.trim()) {
-      const term = this.searchTerm.toLowerCase();
-      results = results.filter(
-        (vehicle) =>
-          vehicle.name.toLowerCase().includes(term) ||
-          vehicle.model.toLowerCase().includes(term) ||
-          vehicle.year.toString().includes(term)
-      );
+      filter.search = this.searchTerm.trim();
     }
 
     if (this.stockFilter === 'inStock') {
-      results = results.filter((v) => v.inStock === true);
+      filter.inStock = true;
     } else if (this.stockFilter === 'outOfStock') {
-      results = results.filter((v) => v.inStock === false);
+      filter.inStock = false;
     }
 
-    if (this.priceRange) {
-      console.log('Applying price filter:', this.priceRange);
-      results = results.filter(
-        (v) => v.price >= this.priceRange.start && v.price <= this.priceRange.end
-      );
-    }
+    filter.minPrice = this.priceRange.start;
+    filter.maxPrice = this.priceRange.end;
 
-    this.filteredVehicles.set(results);
-    this.cdr.detectChanges();
+    this.loading$.next(true);
+
+    this.vehicleService.filterVehicles(filter).subscribe({
+      next: (vehicles) => {
+        this.filteredVehicles.set(vehicles);
+        this.loading$.next(false);
+      },
+      error: (err) => {
+        console.error('Filter failed', err);
+        this.loading$.next(false);
+      },
+    });
   }
 
   clearFilters() {
     this.searchTerm = '';
     this.stockFilter = '';
+    this.year = 0;
     this.priceRange = { start: 100000, end: 10000000 };
-    this.sortBy = 'newest';
-    this.filteredVehicles.set([...this.vehicles]);
-    this.cdr.detectChanges();
+    this.loadAllVehicles();
+  }
+
+  private hasActiveFilters(): boolean {
+    return (
+      this.searchTerm.trim().length > 0 ||
+      this.stockFilter !== '' ||
+      this.priceRange.start !== 100000 ||
+      this.priceRange.end !== 10000000 ||
+      this.year > 0
+    );
+  }
+
+  getLocale(currency: string): string {
+    return currency.toUpperCase() === 'INR' ? 'hi-IN' : 'en-US';
   }
 }

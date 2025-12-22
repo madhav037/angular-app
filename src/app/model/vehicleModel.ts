@@ -32,3 +32,10 @@ export interface vehicleDetails {
   features: string[];
   detailedDescription: string;
 }
+
+export interface VehicleFilterDto {
+  search?: string;
+  inStock?: boolean;
+  minPrice?: number;
+  maxPrice?: number;
+}

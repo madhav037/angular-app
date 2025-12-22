@@ -1,183 +1,193 @@
 <app-navbar></app-navbar>
-<main class="mx-auto px-5 py-5 dashboard-card rounded-3">
-  <!-- <div class="dashboard-header mb-4">
-    <h1 class="text-dark fw-bold mb-2">Vehicle Showroom</h1>
-    <p class="text-muted">Browse and discover your perfect vehicle</p>
-  </div> -->
+  <main class="mx-auto px-5 py-5 dashboard-card rounded-3">
+    <!-- <div class="dashboard-header mb-4">
+      <h1 class="text-dark fw-bold mb-2">Vehicle Showroom</h1>
+      <p class="text-muted">Browse and discover your perfect vehicle</p>
+    </div> -->
 
-  <div class="search-filter-section rounded-3 p-4 mb-4 filter-css">
-    <div class="row g-3 align-items-end">
-      <div class="col-12 col-md-6 col-lg-5">
-        <label for="searchInput" class="form-label small mb-2">Search Vehicles</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="bi bi-search"></i>
-          </span>
-          <input
-            type="text"
-            class="form-control border-start-0 ps-0"
-            id="searchInput"
-            placeholder="Search by name, model, or year..."
-            [(ngModel)]="searchTerm"
-            (input)="applyFilters()"
-          />
+    <div class="search-filter-section rounded-3 p-4 mb-4 filter-css">
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-6 col-lg-5">
+          <label for="searchInput" class="form-label small mb-2">Search Vehicles</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0"
+              id="searchInput"
+              placeholder="Search by name, model, or year..."
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onFilterChanged()"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+          <label for="stockFilter" class="form-label small mb-2">Stock Status</label>
+          <select
+            class="form-select w-100"
+            id="stockFilter"
+            [(ngModel)]="stockFilter"
+            (change)="onFilterChanged()"
+          >
+            <option class="w-50" value="">All</option>
+            <option class="w-50" value="inStock">In Stock</option>
+            <option class="w-50" value="outOfStock">Out of Stock</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 col-lg-2">
+          <label for="priceFilter" class="form-label small">Price Range</label>
+          <div class="w-100">
+            <mat-slider
+              class="w-75"
+              min="100000"
+              max="10000000"
+              step="10000"
+              (ngModelChange)="onFilterChanged()"
+              thumbLabel
+            >
+              <!-- [(ngModel)]="priceRange" -->
+              <input matSliderStartThumb [(ngModel)]="priceRange.start" (dragEnd)="onFilterChanged()"/>
+              <input matSliderEndThumb [(ngModel)]="priceRange.end" (dragEnd)="onFilterChanged()" />
+            </mat-slider>
+          </div>
+          <div class="d-flex justify-content-between small mt-1">
+            <span
+              >Start price :
+              {{
+                priceRange.start | currency : 'INR' : 'symbol' : '1.0-0' : getLocale('INR')
+              }}</span
+            >
+            <span
+              >End price :
+              {{ priceRange.end | currency : 'INR' : 'symbol' : '1.0-0' : getLocale('INR') }}</span
+            >
+          </div>
+        </div>
+
+        <div class="col-6 col-md-6 col-lg-1">
+          <button class="btn btn-outline-light w-100" (click)="clearFilters()">
+            <i class="bi bi-x-circle"></i>
+          </button>
         </div>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-        <label for="stockFilter" class="form-label small mb-2">Stock Status</label>
-        <select
-          class="form-select w-100"
-          id="stockFilter"
-          [(ngModel)]="stockFilter"
-          (change)="applyFilters()"
-        >
-          <option class="w-50" value="">All</option>
-          <option class="w-50" value="inStock">In Stock</option>
-          <option class="w-50" value="outOfStock">Out of Stock</option>
-        </select>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-3 col-lg-2">
-        <label for="priceFilter" class="form-label small">Price Range</label>
-        <div class="w-100">
-          <mat-slider
-            class="w-75"
-            min="100000"
-            max="10000000"
-            step="10000"
-            [(ngModel)]="priceRange"
-            (change)="applyFilters()"
-            thumbLabel
-          >
-            <input matSliderStartThumb [(ngModel)]="priceRange.start" />
-            <input matSliderEndThumb [(ngModel)]="priceRange.end" />
-          </mat-slider>
-        </div>
-        <div class="d-flex justify-content-between small mt-1">
-          <span
-            >Start price :
-            {{ priceRange.start | currency : 'INR' : 'symbol' : '1.0-0' : getLocale('INR') }}</span
-          >
-          <span
-            >End price :
-            {{ priceRange.end | currency : 'INR' : 'symbol' : '1.0-0' : getLocale('INR') }}</span
-          >
-        </div>
-      </div>
-
-      <div class="col-6 col-md-6 col-lg-1">
-        <button class="btn btn-outline-light w-100" (click)="clearFilters()">
-          <i class="bi bi-x-circle"></i>
-        </button>
+      <div class="mt-3 pt-3 border-top">
+        <small>
+          Showing <strong>{{ numberOfVehicles() }}</strong> vehicles
+        </small>
       </div>
     </div>
-
-    <div class="mt-3 pt-3 border-top">
-      <small>
-        Showing <strong>{{ numberOfVehicles() }}</strong> vehicles
-      </small>
+    
+    <div *ngIf="loading$ | async; else vehicleCardSection">
+      <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="spinner-grow text-success" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="container py-1 mx-auto px-0">
-    <div class="row g-4">
-      @for (vehicle of filteredVehicles(); track vehicle.id) {
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div
-          class="card h-100 shadow-sm border-0 hover-card"
-          id="card-css"
-          style="background-color: #20324b"
-        >
-          <div class="position-relative overflow-hidden">
-            <div id="carousel-{{ vehicle.id }}" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-indicators">
-                @for (image of vehicle.images; let j = $index; track image) {
+    <ng-template #vehicleCardSection>
+    <div class="container py-1 mx-auto px-0">
+      <div class="row g-4">
+        @for (vehicle of filteredVehicles(); track vehicle.id) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div
+            class="card h-100 shadow-sm border-0 hover-card"
+            id="card-css"
+            style="background-color: #20324b"
+          >
+            <div class="position-relative overflow-hidden">
+              <div id="carousel-{{ vehicle.id }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  @for (image of vehicle.images; let j = $index; track image) {
+                  <button
+                    type="button"
+                    [attr.data-bs-target]="'#carousel-' + vehicle.id"
+                    [attr.data-bs-slide-to]="j"
+                    [class.active]="j === 0"
+                    aria-current="true"
+                    [attr.aria-label]="'Slide ' + (j + 1)"
+                  ></button>
+                  }
+                </div>
+                <div class="carousel-inner">
+                  @for (image of vehicle.images; let i = $index; track image) {
+                  <div class="carousel-item" [class.active]="i === 0">
+                    <img
+                      [src]="image"
+                      class="card-img-top d-block w-100"
+                      [alt]="vehicle.name"
+                      style="height: 250px; object-fit: cover"
+                    />
+                  </div>
+                  }
+                </div>
                 <button
+                  class="carousel-control-prev"
                   type="button"
                   [attr.data-bs-target]="'#carousel-' + vehicle.id"
-                  [attr.data-bs-slide-to]="j"
-                  [class.active]="j === 0"
-                  aria-current="true"
-                  [attr.aria-label]="'Slide ' + (j + 1)"
-                ></button>
-                }
+                  data-bs-slide="prev"
+                >
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  [attr.data-bs-target]="'#carousel-' + vehicle.id"
+                  data-bs-slide="next"
+                >
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
               </div>
-              <div class="carousel-inner">
-                @for (image of vehicle.images; let i = $index; track image) {
-                <div class="carousel-item" [class.active]="i === 0">
-                  <img
-                    [src]="image"
-                    class="card-img-top d-block w-100"
-                    [alt]="vehicle.name"
-                    style="height: 250px; object-fit: cover"
-                  />
-                </div>
-                }
-              </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                [attr.data-bs-target]="'#carousel-' + vehicle.id"
-                data-bs-slide="prev"
-              >
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                [attr.data-bs-target]="'#carousel-' + vehicle.id"
-                data-bs-slide="next"
-              >
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="card-body d-flex flex-column">
-            @if (vehicle.inStock) {
-            <span class="position-absolute top-50 end-0 m-3 badge bg-success px-3 py-2">
-              In Stock
-            </span>
-            } @else {
-            <span class="position-absolute top-50 end-0 m-3 badge bg-danger px-3 py-2">
-              Out of Stock
-            </span>
-            }
-            <h5 class="card-title fw-bold mb-3 text-primary text-wrap w-50">
-              {{ vehicle.name }} <span class="text-muted">{{ vehicle.year }}</span>
-            </h5>
-
-            <div class="mb-3">
-              <h4 class="fw-bold mb-0" style="color: rgb(80, 95, 103)">
-                {{
-                  vehicle.price
-                    | currency
-                      : (vehicle.currency | uppercase)
-                      : 'symbol'
-                      : '1.0-0'
-                      : getLocale(vehicle.currency)
-                }}
-              </h4>
-              <small class="text-muted">{{ vehicle.ageInShowroom }}</small>
             </div>
 
-            <article class="card-text text-muted flex-grow-1 p-2 pb-3">
-              {{ vehicle.shortDescription }}
-            </article>
-            <nav>
-              <a
-                [routerLink]="['/vehicleDetail', vehicle.id]"
-                class="btn btn-primary w-100 mt-auto"
-              >
-                View Details
-                <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </nav>
+            <div class="card-body d-flex flex-column">
+              @if (vehicle.inStock) {
+              <span class="position-absolute top-50 end-0 m-3 badge bg-success px-3 py-2">
+                In Stock
+              </span>
+              } @else {
+              <span class="position-absolute top-50 end-0 m-3 badge bg-danger px-3 py-2">
+                Out of Stock
+              </span>
+              }
+              <h5 class="card-title fw-bold mb-3 text-primary text-wrap w-50">
+                {{ vehicle.name }} <span class="text-muted">{{ vehicle.year }}</span>
+              </h5>
+
+              <div class="mb-3">
+                <h4 class="fw-bold mb-0" style="color: rgb(80, 95, 103)">
+                  {{
+                    vehicle.price
+                      | currency
+                        : (vehicle.currency | uppercase)
+                        : 'symbol'
+                        : '1.0-0'
+                        : getLocale(vehicle.currency)
+                  }}
+                </h4>
+                <small class="text-muted">{{ vehicle.ageInShowroom }}</small>
+              </div>
+
+              <article class="card-text text-muted flex-grow-1 p-2 pb-3">
+                {{ vehicle.shortDescription }}
+              </article>
+              <nav>
+                <a
+                  [routerLink]="['/vehicleDetail', vehicle.id]"
+                  class="btn btn-primary w-100 mt-auto"
+                >
+                  View Details
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </nav>
+            </div>
           </div>
         </div>
+        }
       </div>
-      }
     </div>
-  </div>
-</main>
+    </ng-template>
+  </main>

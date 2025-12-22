@@ -1,6 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { APP_CONFIG } from '../../injection.token';
 import { User } from '../../model/userModel';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -10,17 +13,28 @@ import { User } from '../../model/userModel';
 })
 export class Navbar {
   user: User | null = null;
-  router = inject(Router);
+
+  private router = inject(Router);
+  private http = inject(HttpClient);
+  private authservice = inject(Auth);
 
   ngOnInit(): void {
-    const stored = localStorage.getItem('loggedInUser') ?? sessionStorage.getItem('loggedInUser');
-    this.user = stored ? JSON.parse(stored) : null;
+    this.loadUser();
+  }
+
+  private loadUser() {
+    this.authservice.getCurrentUser()
+      .subscribe({
+        next: (user : User) => {
+          this.user = user;
+        },
+        error: () => {
+          this.user = null;
+        },
+      });
   }
 
   logout() {
-    localStorage.removeItem('loggedInUser');
-    sessionStorage.removeItem('loggedInUser');
-
-    this.router.navigate(['/login']);
+    this.authservice.logoutUser();
   }
 }
