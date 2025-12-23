@@ -7,12 +7,9 @@ import { Auth } from '../services/auth';
 export class AuthInterceptor implements HttpInterceptor {
   private auth = inject(Auth);
 
-  private isRefreshing = false;
-  private refreshTokenSubject = new BehaviorSubject<string | null>(null);
-
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    // 🚫 Skip auth endpoints
-    if (req.url.includes('/auth/login') || req.url.includes('/auth/refresh')) {
+    
+    if (req.url.includes('/Auth/login') || req.url.includes('/Auth/refresh') || req.url.includes("/Auth/logout")) {
       return next.handle(req.clone({ withCredentials: true }));
     }
 
@@ -28,57 +25,28 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          return this.handle401(authReq, next);
+        if (error.status !== 401) {
+          return throwError(() => error);
         }
-        return throwError(() => error);
-      })
-    );
-  }
+        return this.auth.refreshToken().pipe(
+          switchMap((res) => {
+            this.auth.setAccessToken(res.accessToken);
 
-  private handle401(req: HttpRequest<any>, next: HttpHandler) {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
-
-      return this.auth.refreshToken().pipe(
-        switchMap((res) => {
-          this.isRefreshing = false;
-
-          this.auth.setAccessToken(res.accessToken);
-          this.refreshTokenSubject.next(res.accessToken);
-
-          return next.handle(
-            req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${res.accessToken}`,
-              },
-              withCredentials: true,
-            })
-          );
-        }),
-        catchError((err) => {
-          this.isRefreshing = false;
-          this.auth.logoutUser();
-          return throwError(() => err);
-        })
-      );
-    }
-
-    // ⏳ Wait for refresh to finish
-    return this.refreshTokenSubject.pipe(
-      filter((token) => token !== null),
-      take(1),
-      switchMap((token) =>
-        next.handle(
-          req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true,
+            return next.handle(
+              req.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${res.accessToken}`,
+                },
+                withCredentials: true,
+              })
+            );
+          }),
+          catchError(() => {
+            this.auth.logoutUser();
+            return throwError(() => error);
           })
-        )
-      )
+        );
+      })
     );
   }
 }

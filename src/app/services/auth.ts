@@ -91,24 +91,16 @@ export class Auth {
     this.http.post(url, {}, { withCredentials: true }).subscribe({
       complete: () => {
         this.clearTokens();
+        localStorage.removeItem('loggedInUser');
+        sessionStorage.removeItem('loggedInUser');
         this.router.navigate(['/login']);
       },
     });
   }
 
   getCurrentUser(): Observable<User> {
-    const url = `${this.APP_CONFIG.apiUrl}/auth/me`;
+    const url = `${this.APP_CONFIG.apiUrl}/Auth/me`;
     return this.http.get<User>(url, { withCredentials: true });
-  }
-
-  restoreSession(): Observable<boolean> {
-    return this.http
-      .post<any>(`${this.APP_CONFIG.apiUrl}/auth/refresh`, {}, { withCredentials: true })
-      .pipe(
-        tap((res) => this.setAccessToken(res.accessToken)),
-        map(() => true),
-        catchError(() => of(false))
-      );
   }
 
   // logoutUser() {

@@ -17,7 +17,7 @@ export class Vehicle {
   readonly baseApiUrl = this._appConfig.apiUrl + '/Vehicle';
 
   getVehicles(): Observable<vehicleDetails[]> {
-    return this.http.get<vehicleDetails[]>(`${this.baseApiUrl}`);
+    return this.http.get<vehicleDetails[]>(`${this.baseApiUrl}`, {withCredentials: true});
   }
 
   getVehicleById(id: number): Observable<vehicleDetails> {
