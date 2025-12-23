@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal, effect } from '@angular/core';
 import { CurrencyPipe, UpperCasePipe, NgIf, AsyncPipe } from '@angular/common';
 import { Vehicle } from '../../services/vehicle';
 import { Navbar } from '../navbar/navbar';
@@ -34,6 +34,10 @@ export class Dashboard implements OnInit, OnDestroy {
 
   loading$ = new BehaviorSubject<boolean>(true);
 
+  currentPage = signal<number>(1);
+  itemsPerPage = 5;
+  hasNextPage = signal<boolean>(true);
+
   searchTerm = '';
   stockFilter = '';
   year = 0;
@@ -43,10 +47,19 @@ export class Dashboard implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.loadAllVehicles();
+    // this.loadAllVehicles();
 
     this.filterChange$.pipe(debounceTime(800), takeUntil(this.destroy$)).subscribe(() => {
       this.applyFilters();
+    });
+  }
+  constructor() {
+    effect(() => {
+      if (this.hasActiveFilters()) {
+        this.applyFilters();
+        return;
+      }
+      this.loadAllVehicles();
     });
   }
 
@@ -62,10 +75,24 @@ export class Dashboard implements OnInit, OnDestroy {
   private loadAllVehicles() {
     this.loading$.next(true);
 
-    this.vehicleService.getVehicles().subscribe({
-      next: (vehicles) => {
-        this.vehicles = vehicles;
-        this.filteredVehicles.set(vehicles);
+    // this.vehicleService.getVehicles().subscribe({
+    //   next: (vehicles) => {
+    //     this.vehicles = vehicles;
+    //     this.filteredVehicles.set(vehicles);
+    //     this.loading$.next(false);
+    //   },
+    //   error: (err) => {
+    //     this.toast.show(`Failed to load vehicles ${err.message}`, 'error');
+    //     this.loading$.next(false);
+    //   },
+    // });
+    this.vehicleService.GetPagedVehicles(this.currentPage(), this.itemsPerPage).subscribe({
+      next: (response) => {
+        this.vehicles = response.body || [];
+        this.hasNextPage.set(response.headers.get('X-Has-Next-Page')?.toLowerCase() === 'true');
+        console.log('header = ', response.headers.get('X-Has-Next-Page'));
+        console.log('hasNextPage = ', this.hasNextPage());
+        this.filteredVehicles.set(response.body || []);
         this.loading$.next(false);
       },
       error: (err) => {
@@ -98,16 +125,31 @@ export class Dashboard implements OnInit, OnDestroy {
 
     this.loading$.next(true);
 
-    this.vehicleService.filterVehicles(filter).subscribe({
-      next: (vehicles) => {
-        this.filteredVehicles.set(vehicles);
-        this.loading$.next(false);
-      },
-      error: (err) => {
-        console.error('Filter failed', err);
-        this.loading$.next(false);
-      },
-    });
+    // this.vehicleService.filterVehicles(filter).subscribe({
+    //   next: (vehicles) => {
+    //     this.filteredVehicles.set(vehicles);
+    //     this.loading$.next(false);
+    //   },
+    //   error: (err) => {
+    //     console.error('Filter failed', err);
+    //     this.loading$.next(false);
+    //   },
+    // });
+    this.vehicleService
+      .GetFilteredPagedVehicles(filter, this.currentPage(), this.itemsPerPage)
+      .subscribe({
+        next: (response) => {
+          this.filteredVehicles.set(response.body || []);
+          this.hasNextPage.set(response.headers.get('X-Has-Next-Page')?.toLowerCase() === 'true');
+          console.log('header = ', response.headers.get('X-Has-Next-Page'));
+          console.log('hasNextPage = ', this.hasNextPage());
+          this.loading$.next(false);
+        },
+        error: (err) => {
+          console.error('Filter failed', err);
+          this.loading$.next(false);
+        },
+      });
   }
 
   clearFilters() {
@@ -130,5 +172,14 @@ export class Dashboard implements OnInit, OnDestroy {
 
   getLocale(currency: string): string {
     return currency.toUpperCase() === 'INR' ? 'hi-IN' : 'en-US';
+  }
+
+  changePage(state: 'next' | 'prev') {
+    if (state == 'next') {
+      this.currentPage.update((prev) => prev + 1);
+    }
+    if (state == 'prev') {
+      this.currentPage.update((prev) => prev - 1);
+    }
   }
 }

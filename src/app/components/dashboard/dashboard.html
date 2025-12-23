@@ -189,5 +189,9 @@
         }
       </div>
     </div>
+    <div class="row w-50 mx-auto mt-3 gap-2">
+      <button class="col w-auto p-2 btn btn-outline-info" [disabled]="currentPage() == 1" (click)="changePage('prev')">Prev</button>
+      <button class="col w-auto p-2 btn btn-outline-info" [disabled]="!hasNextPage()" (click)="changePage('next')">Next</button>
+    </div>
     </ng-template>
   </main>

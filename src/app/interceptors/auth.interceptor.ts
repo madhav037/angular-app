@@ -8,7 +8,8 @@ export class AuthInterceptor implements HttpInterceptor {
   private auth = inject(Auth);
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    
+    console.log('AuthInterceptor invoked for URL:', req.url);
+
     if (req.url.includes('/Auth/login') || req.url.includes('/Auth/refresh') || req.url.includes("/Auth/logout")) {
       return next.handle(req.clone({ withCredentials: true }));
     }
@@ -22,6 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
         withCredentials: true,
       });
     }
+    console.log('Request with Auth Headers:', authReq);
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -31,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.auth.refreshToken().pipe(
           switchMap((res) => {
             this.auth.setAccessToken(res.accessToken);
-
+            console.log('Token refreshed in interceptor');
             return next.handle(
               req.clone({
                 setHeaders: {

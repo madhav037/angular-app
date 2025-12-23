@@ -7,6 +7,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { APP_CONFIG } from './injection.token';
 import { environment } from '../environment/environment';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { debugInterceptor } from './interceptors/debug.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useValue: debugInterceptor, multi: true },
     {
       provide: APP_CONFIG,
       useFactory: () => ({

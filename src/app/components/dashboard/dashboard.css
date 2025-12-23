@@ -51,3 +51,6 @@ select {
   max-width: 100%;
 }
 
+.btng-info:hover {
+ background-color: rgba(25, 112, 252, 0.25);
+}
