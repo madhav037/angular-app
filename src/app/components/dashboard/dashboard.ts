@@ -31,6 +31,7 @@ export class Dashboard implements OnInit, OnDestroy {
   vehicles: vehicleDetails[] = [];
   filteredVehicles = signal<vehicleDetails[]>([]);
   numberOfVehicles = computed(() => this.filteredVehicles().length);
+  hasFilters = signal(false);
 
   loading$ = new BehaviorSubject<boolean>(true);
 
@@ -53,13 +54,17 @@ export class Dashboard implements OnInit, OnDestroy {
       this.applyFilters();
     });
   }
+
   constructor() {
     effect(() => {
-      if (this.hasActiveFilters()) {
+      const page = this.currentPage();
+      const filtersActive = this.hasFilters();
+
+      if (filtersActive) {
         this.applyFilters();
-        return;
+      } else {
+        this.loadAllVehicles();
       }
-      this.loadAllVehicles();
     });
   }
 
@@ -69,6 +74,8 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   onFilterChanged() {
+    this.hasFilters.set(this.hasActiveFilters());
+    this.currentPage.set(1);
     this.filterChange$.next();
   }
 
@@ -90,8 +97,8 @@ export class Dashboard implements OnInit, OnDestroy {
       next: (response) => {
         this.vehicles = response.body || [];
         this.hasNextPage.set(response.headers.get('X-Has-Next-Page')?.toLowerCase() === 'true');
-        console.log('header = ', response.headers.get('X-Has-Next-Page'));
-        console.log('hasNextPage = ', this.hasNextPage());
+        // console.log('header = ', response.headers.get('X-Has-Next-Page'));
+        // console.log('hasNextPage = ', this.hasNextPage());
         this.filteredVehicles.set(response.body || []);
         this.loading$.next(false);
       },
@@ -103,11 +110,6 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   applyFilters() {
-    if (!this.hasActiveFilters()) {
-      this.filteredVehicles.set(this.vehicles);
-      return;
-    }
-
     const filter: VehicleFilterDto = {};
 
     if (this.searchTerm.trim()) {
@@ -125,30 +127,15 @@ export class Dashboard implements OnInit, OnDestroy {
 
     this.loading$.next(true);
 
-    // this.vehicleService.filterVehicles(filter).subscribe({
-    //   next: (vehicles) => {
-    //     this.filteredVehicles.set(vehicles);
-    //     this.loading$.next(false);
-    //   },
-    //   error: (err) => {
-    //     console.error('Filter failed', err);
-    //     this.loading$.next(false);
-    //   },
-    // });
     this.vehicleService
       .GetFilteredPagedVehicles(filter, this.currentPage(), this.itemsPerPage)
       .subscribe({
         next: (response) => {
           this.filteredVehicles.set(response.body || []);
           this.hasNextPage.set(response.headers.get('X-Has-Next-Page')?.toLowerCase() === 'true');
-          console.log('header = ', response.headers.get('X-Has-Next-Page'));
-          console.log('hasNextPage = ', this.hasNextPage());
           this.loading$.next(false);
         },
-        error: (err) => {
-          console.error('Filter failed', err);
-          this.loading$.next(false);
-        },
+        error: () => this.loading$.next(false),
       });
   }
 
@@ -157,7 +144,9 @@ export class Dashboard implements OnInit, OnDestroy {
     this.stockFilter = '';
     this.year = 0;
     this.priceRange = { start: 100000, end: 10000000 };
-    this.loadAllVehicles();
+
+    this.hasFilters.set(false);
+    this.currentPage.set(1);
   }
 
   private hasActiveFilters(): boolean {
@@ -178,6 +167,7 @@ export class Dashboard implements OnInit, OnDestroy {
     if (state == 'next') {
       this.currentPage.update((prev) => prev + 1);
     }
+    if (state === 'prev' && this.currentPage() === 1) return;
     if (state == 'prev') {
       this.currentPage.update((prev) => prev - 1);
     }

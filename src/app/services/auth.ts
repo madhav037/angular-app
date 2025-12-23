@@ -46,7 +46,12 @@ export class Auth {
   }
 
   getAccessToken(): string | null {
-    return this.accessToken;
+    return (
+      this.accessToken ??
+      (JSON.parse(localStorage.getItem('loggedInUser') || 'null')?.token ||
+        JSON.parse(sessionStorage.getItem('loggedInUser') || 'null')?.token ||
+        null)
+    );
   }
 
   clearTokens() {
