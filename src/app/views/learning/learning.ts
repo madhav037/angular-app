@@ -1,7 +1,7 @@
 import { Component, DoCheck } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CustomDirective } from '../../directives/customDirective';
-import { CustomPipe } from '../../pipes/customPipe';
+import { CustomDirective } from '../../shared/directives/customDirective';
+import { CustomPipe } from '../../shared/pipes/customPipe';
 
 interface LocalInterface {
   id: number;

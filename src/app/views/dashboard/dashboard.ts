@@ -3,7 +3,7 @@ import { CurrencyPipe, UpperCasePipe, NgIf, AsyncPipe } from '@angular/common';
 import { Vehicle } from '../../services/vehicle';
 import { Navbar } from '../navbar/navbar';
 import { ToastService } from '../../services/toast';
-import { vehicleDetails, VehicleFilterDto } from '../../model/vehicleModel';
+import { vehicleDetails, VehicleFilterDto } from '../../shared/model/vehicleModel';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';

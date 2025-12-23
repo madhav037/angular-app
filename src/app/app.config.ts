@@ -3,11 +3,11 @@ import { provideRouter, withDebugTracing } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { TokenInterceptor } from './interceptors/token.interceptor';
+// import { TokenInterceptor } from './interceptors/token.interceptor';
 import { APP_CONFIG } from './injection.token';
 import { environment } from '../environment/environment';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { debugInterceptor } from './interceptors/debug.interceptor';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [

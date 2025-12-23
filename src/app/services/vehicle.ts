@@ -2,7 +2,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environment/environment';
-import { vehicleDetails, VehicleFilterDto } from '../model/vehicleModel';
+import { vehicleDetails, VehicleFilterDto } from '../shared/model/vehicleModel';
 import { Observable } from 'rxjs';
 import { APP_CONFIG } from '../injection.token';
 

@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { vehicleDetails } from '../../model/vehicleModel';
+import { vehicleDetails } from '../../shared/model/vehicleModel';
 import { Vehicle } from '../../services/vehicle';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Navbar } from '../navbar/navbar';

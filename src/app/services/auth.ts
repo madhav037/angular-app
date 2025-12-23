@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG } from '../injection.token';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { User } from '../model/userModel';
+import { User } from '../shared/model/userModel';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG } from '../../injection.token';
-import { User } from '../../model/userModel';
+import { User } from '../../shared/model/userModel';
 import { Auth } from '../../services/auth';
 
 @Component({
