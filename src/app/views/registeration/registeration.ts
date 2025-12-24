@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Navbar } from '../navbar/navbar';
 import { RouterLink, Router } from '@angular/router';
@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 // import { Toast } from 'bootstrap';
 import { Auth } from '../../services/auth';
 import { ToastService } from '../../services/toast';
+import { Roles } from '../../shared/model/roleModel';
+import { catchError, EMPTY, switchMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-registeration',
@@ -13,10 +15,13 @@ import { ToastService } from '../../services/toast';
   templateUrl: './registeration.html',
   styleUrl: './registeration.css',
 })
-export class Registeration {
+export class Registeration implements OnInit {
   private authService = inject(Auth);
   private router = inject(Router);
   private toast = inject(ToastService);
+
+  roles = Roles;
+  isUserAdmin : boolean = false;
 
   registerationForm = new FormGroup(
     {
@@ -33,9 +38,18 @@ export class Registeration {
       ]),
       confirmPassword: new FormControl('', [Validators.required]),
       termsCheck: new FormControl(false, [Validators.requiredTrue]),
+      role: new FormControl(Roles.USER),
     },
     { validators: this.passwordMatchValidator() }
   );
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    if (this.authService.getAccessToken()) {
+      this.isUserAdmin = true;
+    }
+  }
 
   passwordMatchValidator(): ValidatorFn {
     return (group: AbstractControl) => {
@@ -107,31 +121,32 @@ export class Registeration {
       fullName: this.registerationForm.value.fullName!,
       email: this.registerationForm.value.email!,
       password: this.registerationForm.value.password!,
+      role: this.registerationForm.value.role ?? this.roles.USER,
     };
 
-    this.authService.getUserByEmail(payload.email).subscribe({
-      next: (users: any) => {
-        console.log('Existing users with this email:', users);
-        if (users.length > 0) {
+    this.authService
+      .getUserByEmail(payload.email)
+      .pipe(
+        switchMap(() => {
           this.toast.show('Email is already registered.', 'warning');
-          return;
-        }
-
-        this.authService.addUserDetail(payload).subscribe({
-          next: (response) => {
-            this.toast.show('Registration Successful!', 'success');
-            console.log('User registered successfully:', response);
-            this.router.navigate(['/login']);
-          },
-          error: (error) => {
-            console.error('Error registering user:', error);
-          },
-        });
-      },
-      error: (error) => {
-        console.error('Error checking email:', error);
-      },
-    });
+          return EMPTY;
+        }),
+        catchError((err) => {
+          if (err.status === 404) {
+            return this.authService.addUserDetail(payload);
+          }
+          return throwError(() => err);
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.toast.show('Registration Successful!', 'success');
+          this.router.navigate(['/dashboard']);
+        },
+        error: () => {
+          this.toast.show('Something went wrong', 'error');
+        },
+      });
 
     console.log('Sending payload:', payload);
   }

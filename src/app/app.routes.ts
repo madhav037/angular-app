@@ -1,48 +1,47 @@
 import { Routes } from '@angular/router';
-import { Login } from './components/login/login';
-import { Registeration } from './components/registeration/registeration';
-import { LandingPage } from './components/landing-page/landing-page';
-import { Dashboard } from './components/dashboard/dashboard';
+import { LandingPage } from './views/landing-page/landing-page';
+import { Login } from './views/login/login';
+import { Registeration } from './views/registeration/registeration';
 import { authGuard } from './shared/guards/auth-guard';
-import { VehicleDetails } from './components/vehicle-details/vehicle-details';
-import { autoLoginGuard } from './shared/guards/auto-login-guard';
-import { LifeCycleComponent } from './components/life-cycle-component/life-cycle-component';
-import { BigComponent } from './components/big-component/big-component';
+import { LifeCycleComponent } from './views/life-cycle-component/life-cycle-component';
+import { adminGuard } from './shared/guards/admin-guard-guard';
+import { Roles } from './shared/model/roleModel';
+import { publicGuard } from './shared/guards/auto-login-guard';
 // import { BigComponent } from './components/big-component/big-component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LandingPage,
-    canActivate: [autoLoginGuard],
+    canActivate: [publicGuard],
   },
   {
     path: 'login',
     component: Login,
-    canActivate: [autoLoginGuard],
+    canActivate: [publicGuard],
   },
   {
     path: 'register',
     component: Registeration,
-    canActivate: [autoLoginGuard],
+    canActivate: [publicGuard],
   },
   {
     path: 'dashboard',
     // component: Dashboard,
-    loadComponent: () => import('./components/dashboard/dashboard').then((m) => m.Dashboard),
+    loadComponent: () => import('./views/dashboard/dashboard').then((m) => m.Dashboard),
     canActivate: [authGuard],
   },
   {
     path: 'vehicleDetail/:id',
     loadComponent: () =>
-      import('./components/vehicle-details/vehicle-details').then((m) => m.VehicleDetails),
+      import('./views/vehicle-details/vehicle-details').then((m) => m.VehicleDetails),
     canActivate: [authGuard],
   },
   {
     path: 'bigcomponent',
     // component: BigComponent,
     loadComponent: () =>
-      import('./components/big-component/big-component').then((m) => m.BigComponent),
+      import('./views/big-component/big-component').then((m) => m.BigComponent),
   },
   {
     path: 'lifecycledemo',
@@ -50,7 +49,7 @@ export const routes: Routes = [
       {
         path: 'parent',
         loadComponent: () =>
-          import('./components/parent-life-cycle-component/parent-life-cycle-component').then(
+          import('./views/parent-life-cycle-component/parent-life-cycle-component').then(
             (m) => m.ParentLifeCycleComponent
           ),
       },
@@ -61,8 +60,15 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'admin',
+    canActivate: [adminGuard],
+    data : { requiredRole: Roles.ADMIN },
+    loadChildren: () =>
+      import('./views/Admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
+  {
     path: 'learning',
-    loadComponent: () => import('./components/learning/learning').then((m) => m.Learning),
+    loadComponent: () => import('./views/learning/learning').then((m) => m.Learning),
   },
   {
     path: '**',

@@ -8,11 +8,11 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
-    Navbar,
     RouterLink,
     CurrencyPipe,
     UpperCasePipe,
@@ -27,11 +27,13 @@ import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
 export class Dashboard implements OnInit, OnDestroy {
   private vehicleService = inject(Vehicle);
   private toast = inject(ToastService);
+  private authService = inject(Auth);
 
   vehicles: vehicleDetails[] = [];
   filteredVehicles = signal<vehicleDetails[]>([]);
   numberOfVehicles = computed(() => this.filteredVehicles().length);
   hasFilters = signal(false);
+  isUserAdmin = signal<boolean>(false);
 
   loading$ = new BehaviorSubject<boolean>(true);
 
@@ -52,6 +54,11 @@ export class Dashboard implements OnInit, OnDestroy {
 
     this.filterChange$.pipe(debounceTime(800), takeUntil(this.destroy$)).subscribe(() => {
       this.applyFilters();
+    });
+    this.authService.isUserAdmin().subscribe({
+      next: (isAdmin) => {
+        this.isUserAdmin.set(isAdmin);
+      },
     });
   }
 
@@ -170,6 +177,20 @@ export class Dashboard implements OnInit, OnDestroy {
     if (state === 'prev' && this.currentPage() === 1) return;
     if (state == 'prev') {
       this.currentPage.update((prev) => prev - 1);
+    }
+  }
+
+  deleteVehicle(id: number, name : string) {
+    if (confirm(`Are you sure you want to delete vehicle : ${name}?`)) {
+      this.vehicleService.deleteVehicle(id).subscribe({
+        next: () => {
+          this.toast.show('Vehicle deleted successfully', 'success');
+          this.applyFilters();
+        },
+        error: (err) => {
+          this.toast.show(`Failed to delete vehicle: ${err.message}`, 'error');
+        },
+      });
     }
   }
 }

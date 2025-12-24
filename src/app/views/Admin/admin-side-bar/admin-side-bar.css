@@ -1,0 +1,12 @@
+.sidebar-link {
+  display: block;
+  color: white;
+  border: 0px;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: border-bottom 1s;
+}
+
+.sidebar-link:hover {
+    border-bottom: 1px solid white;
+}

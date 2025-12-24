@@ -1,0 +1,213 @@
+<div class="container-fluid p-4">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">
+      {{ isEditMode ? 'Edit Vehicle' : 'Create Vehicle' }}
+    </h2>
+    <p class="text-muted">Fill in all required vehicle details</p>
+  </div>
+
+  <form [formGroup]="form" class="row g-4">
+    <section>
+      <div class="col-12">
+        <div class="card section-class shadow-sm">
+          <div class="card-header fw-semibold">Vehicle Details</div>
+          <div class="card-body row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Name</label>
+              <input class="form-control input-field" formControlName="name" />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Model</label>
+              <input class="form-control input-field" formControlName="model" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Year</label>
+              <input type="number" class="form-control input-field" formControlName="year" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">In Stock</label>
+              <select class="form-select input-field" formControlName="inStock">
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Price</label>
+              <div class="input-group row">
+                <span class="input-group-text input-field col w-25">{{ form.value.currency }}</span>
+                <input
+                  type="number"
+                  class="form-control input-field col w-75"
+                  formControlName="price"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Currency</label>
+              <select class="form-select input-field" formControlName="currency">
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Short Description</label>
+              <input class="form-control input-field" formControlName="shortDescription" />
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label">Detailed Description</label>
+              <textarea
+                class="form-control input-field w-100"
+                formControlName="detailedDescription"
+                rows="3"
+                cols="5"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="col-12">
+        <div class="card section-class shadow-sm" formGroupName="specification">
+          <div class="card-header fw-semibold">Specifications</div>
+
+          <div class="card-body row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Fuel Type</label>
+              <select class="form-select input-field" formControlName="fuelType">
+                <option value="">Select</option>
+                <option>Petrol</option>
+                <option>Diesel</option>
+                <option>Electric</option>
+                <option>Hybrid</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Transmission</label>
+              <input class="form-control input-field" formControlName="transmission" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Body Type</label>
+              <select class="form-select input-field" formControlName="bodyType">
+                <option *ngFor="let type of bodyTypeTypes" selected="index=1" [value]="type">
+                  {{ type }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Drivetrain</label>
+              <select class="form-select input-field" formControlName="drivetrain">
+                <option *ngFor="let type of driveTrainTypes" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Engine</label>
+              <input class="form-control input-field" formControlName="engine" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Power (HP)</label>
+              <input class="form-control input-field" formControlName="power" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Torque (Nm)</label>
+              <input class="form-control input-field" formControlName="torque" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Mileage (km/l)</label>
+              <input class="form-control input-field" formControlName="mileage" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Top Speed (km/h)</label>
+              <input class="form-control input-field" formControlName="topSpeed" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Acceleration (0-100 km/h)</label>
+              <input class="form-control input-field" formControlName="acceleration" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Seating</label>
+              <select class="form-select input-field" formControlName="seating">
+                <option *ngFor="let s of [2, 4, 5, 6, 7]" [value]="s">{{ s }} Seater</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="col-12">
+        <div class="card section-class shadow-sm" formGroupName="dimension">
+          <div class="card-header fw-semibold">Dimensions</div>
+
+          <div class="card-body row g-3">
+            <div class="col-md-2">
+              <label class="form-label">Length (mm)</label>
+              <input class="form-control input-field" formControlName="length" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Width (mm)</label>
+              <input class="form-control input-field" formControlName="width" />
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Height (mm)</label>
+              <input class="form-control input-field" formControlName="height" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Wheelbase (mm)</label>
+              <input class="form-control input-field" formControlName="wheelbase" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Boot Space (liters)</label>
+              <input class="form-control input-field" formControlName="bootSpace" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="col-12">
+        <div class="card section-class shadow-sm" formGroupName="images">
+          <div class="card-header fw-semibold">Images</div>
+
+          <div class="card-body row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Image URL 1</label>
+              <input class="form-control input-field" formControlName="image1" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-primary px-4" [disabled]="form.invalid">
+        {{ isEditMode ? 'Update Vehicle' : 'Create Vehicle' }}
+      </button>
+    </div>
+  </form>
+</div>

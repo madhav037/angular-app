@@ -1,0 +1,24 @@
+.section-class {
+    background-color: rgb(35, 61, 100);
+    border-radius: 8px;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.input-field {
+    background-color: rgba(21, 36, 73, 0.8);
+    border: 1px solid rgba(81, 203, 238, 0.25);
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    color: white;
+}
+
+.input-field:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+}

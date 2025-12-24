@@ -1,14 +1,17 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivate, CanActivateFn, CanMatchFn, Router } from '@angular/router';
+import { Auth } from '../../services/auth';
 
-export const autoLoginGuard: CanActivateFn = (route, state) => {
-  
+export const publicGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const loggedInUser = localStorage.getItem('loggedInUser') ?? sessionStorage.getItem('loggedInUser');
+  const auth = inject(Auth);
 
-  if (loggedInUser) {
-    router.navigate(['/dashboard']);
-    return false;
+  if (auth.getAccessToken()) {
+    console.log('User is already logged in, redirecting to dashboard.');
+    // router.navigate(['/dashboard']);
+    return router.createUrlTree(['/dashboard']);
+    // return false;
   }
+  console.log('No logged in user, allowing access to public route.');
   return true;
 };

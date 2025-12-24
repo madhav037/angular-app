@@ -36,6 +36,10 @@ export class Vehicle {
     return this.http.get<any[]>(`${this.baseApiUrl}/filter`, { params });
   }
 
+  deleteVehicle(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseApiUrl}/${id}`);
+  }
+
   GetPagedVehicles(
     pageNumber: number,
     pageSize: number
