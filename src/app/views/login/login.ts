@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { Navbar } from '../navbar/navbar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../../services/auth';
@@ -9,7 +8,7 @@ import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-login',
-  imports: [Navbar, ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@a
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { Auth } from '../../services/auth';
+import { environment } from '../../../environment/environment';
 
 
 @Injectable()
@@ -11,6 +12,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // console.log('AuthInterceptor invoked for URL:', req.url);
+    if (environment.bypassAuthGuards === true) {
+      console.log('Bypassing AuthInterceptor as per environment settings.');
+      return next.handle(req);
+    }
 
     if (req.url.includes('/Auth/login') || req.url.includes('/Auth/refresh') || req.url.includes("/Auth/logout")) {
       return next.handle(req.clone({ withCredentials: true }));

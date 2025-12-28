@@ -2,10 +2,16 @@ import { inject } from '@angular/core';
 import { CanMatchFn, Router } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { catchError, firstValueFrom, map, of, tap } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 export const authGuard: CanMatchFn = async () => {
   const router = inject(Router);
   const authservice = inject(Auth);
+
+  if (environment.bypassAuthGuards === true) {
+    console.log('Bypassing auth guard as per environment settings.');
+    return true;
+  }
 
   if (authservice.getAccessToken()) {
     console.log('Access token found, allowing access to protected route.');

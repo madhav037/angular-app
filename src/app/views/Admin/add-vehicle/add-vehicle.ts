@@ -1,12 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  RequiredValidator,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { bodyTypeTypes, drivetrainTypes, vehicleDetails } from '../../../shared/model/vehicleModel';
 import { Auth } from '../../../services/auth';
 import { Vehicle } from '../../../services/vehicle';
 import { ToastService } from '../../../services/toast';
 import { NgIf, NgForOf } from '@angular/common';
-
 
 @Component({
   selector: 'app-add-vehicle',
@@ -77,7 +82,7 @@ export class AddVehicle implements OnInit {
           console.log('Vehicle data loaded for editing:', data);
         },
         error: (err: any) => {
-          this.toastService.show("Failed to load vehicle data for editing", 'error');
+          this.toastService.show('Failed to load vehicle data for editing', 'error');
           console.error(`Failed to load vehicle data: ${err.message}`);
         },
       });

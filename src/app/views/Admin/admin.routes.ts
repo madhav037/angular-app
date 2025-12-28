@@ -18,6 +18,10 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'edit/:id',
         loadComponent: () => import('./add-vehicle/add-vehicle').then((m) => m.AddVehicle),
+      }, 
+      {
+        path: 'manage-users',
+        loadComponent: () => import('./manage-users/manage-users').then((m) => m.ManageUsers),
       }
     ],
   },

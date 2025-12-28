@@ -22,6 +22,8 @@ export class Auth {
 
   private currentUser$ = new BehaviorSubject<User | null>(null);
 
+  private rememberMe: boolean = true;
+
   getUser$() {
     return this.currentUser$.asObservable();
   }
@@ -30,8 +32,8 @@ export class Auth {
     this.currentUser$.next(user);
   }
 
-  getUsers() {
-    return this.http.get(`${this.baseApiUrl}`);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseApiUrl}`);
   }
 
   setUserRole(role: string) {
@@ -97,8 +99,16 @@ export class Auth {
   // }
   loginUser(email: string, password: string, rememberMe: boolean = false) {
     const url = `${this.APP_CONFIG.apiUrl}/Auth/login`;
+    const header = { 'X-Remember-Me': rememberMe ? 'true' : 'false' };
+
+    this.rememberMe = rememberMe;
+
     return this.http
-      .post<{ accessToken: string }>(url, { email, password }, { withCredentials: true })
+      .post<{ accessToken: string }>(
+        url,
+        { email, password },
+        { headers: header, withCredentials: true }
+      )
       .pipe(
         tap((response) => {
           // this.accessToken = response.accessToken;
@@ -120,8 +130,10 @@ export class Auth {
   refreshToken() {
     const url = `${this.APP_CONFIG.apiUrl}/Auth/refresh`;
 
+    const header = { 'X-Remember-Me': this.rememberMe ? 'true' : 'false' };
+
     return this.http
-      .post<{ accessToken: string }>(url, {}, { withCredentials: true })
+      .post<{ accessToken: string }>(url, {}, { headers: header, withCredentials: true })
       .pipe(tap((res) => this.setAccessToken(res.accessToken)));
   }
 
@@ -150,6 +162,7 @@ export class Auth {
 
   initializeAuth(): Observable<User | null> {
     const token = this.getAccessToken();
+    console.log('Initializing auth with token:', token);
 
     if (!token) {
       return of(null);
