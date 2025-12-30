@@ -21,16 +21,14 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(req.clone({ withCredentials: true }));
     }
 
+
     const token = this.auth.getAccessToken();
     let authReq = req;
 
     if (token) {
-      authReq = req.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      });
+      authReq = this.addAuthHeader(req, token);
     }
-    // console.log('Request with Auth Headers:', authReq);
+    
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -39,8 +37,8 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return this.auth.refreshToken().pipe(
           switchMap((res) => {
-            this.auth.setAccessToken(res.accessToken);
-            console.log("generated new access token:", res.accessToken);
+            // this.auth.setAccessToken(res.accessToken);
+            console.log("generated new access token:", res);
             console.log('no. of times new token is generated', ++this.count);
             return next.handle(
               req.clone({
@@ -59,4 +57,23 @@ export class AuthInterceptor implements HttpInterceptor {
       })
     );
   }
+
+  private addAuthHeader(req: HttpRequest<any>, token: string) {
+    // 🔥 DO NOT set Content-Type if body is FormData
+    if (req.body instanceof FormData) {
+      return req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+    }
+
+    return req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+  }
 }
+

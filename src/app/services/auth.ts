@@ -67,6 +67,8 @@ export class Auth {
 
   setAccessToken(token: string) {
     this.accessToken = token;
+    console.log('Access token set:', token);
+    this.setLocalStorageToken(token, this.rememberMe);
   }
 
   getAccessToken(): string | null {
@@ -113,7 +115,7 @@ export class Auth {
         tap((response) => {
           // this.accessToken = response.accessToken;
           this.setAccessToken(response.accessToken);
-          this.setLocalStorageToken(response.accessToken, rememberMe);
+          // this.setLocalStorageToken(response.accessToken, rememberMe);
         }),
         switchMap(() => this.getCurrentUser())
       );

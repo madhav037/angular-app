@@ -6,7 +6,7 @@
     <p class="text-muted">Fill in all required vehicle details</p>
   </div>
 
-  <form [formGroup]="form" class="row g-4">
+  <form [formGroup]="form" class="row g-4" (ngSubmit)="onSubmit()">
     <section>
       <div class="col-12">
         <div class="card section-class shadow-sm">
@@ -15,16 +15,43 @@
             <div class="col-md-4">
               <label class="form-label">Name</label>
               <input class="form-control input-field" formControlName="name" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('name')?.invalid &&
+                  (form.get('name')?.touched || form.get('name')?.dirty)
+                "
+              >
+                Name is required
+              </div>
             </div>
 
             <div class="col-md-4">
               <label class="form-label">Model</label>
               <input class="form-control input-field" formControlName="model" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('model')?.invalid &&
+                  (form.get('model')?.touched || form.get('model')?.dirty)
+                "
+              >
+                Model is required
+              </div>
             </div>
 
             <div class="col-md-2">
               <label class="form-label">Year</label>
               <input type="number" class="form-control input-field" formControlName="year" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('year')?.invalid &&
+                  (form.get('year')?.touched || form.get('year')?.dirty)
+                "
+              >
+                Enter Valid Year
+              </div>
             </div>
 
             <div class="col-md-2">
@@ -35,19 +62,28 @@
               </select>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
               <label class="form-label">Price</label>
               <div class="input-group row">
-                <span class="input-group-text input-field col w-25">{{ form.value.currency }}</span>
+                <span class="input-group-text input-field ms-2 col w-25">{{ form.value.currency }}</span>
                 <input
                   type="number"
                   class="form-control input-field col w-75"
                   formControlName="price"
                 />
               </div>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('price')?.invalid &&
+                  (form.get('price')?.touched || form.get('price')?.dirty)
+                "
+              >
+                Price is required
+              </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="form-label">Currency</label>
               <select class="form-select input-field" formControlName="currency">
                 <option value="INR">INR</option>
@@ -56,9 +92,34 @@
               </select>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
+              <label class="form-label"> Age in Showroom (months)</label>
+              <input
+                type="number"
+                class="form-control input-field"
+                formControlName="ageInShowroom"
+              />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('ageInShowroom')?.invalid &&
+                  (form.get('ageInShowroom')?.touched || form.get('ageInShowroom')?.dirty)
+                "
+              >Age in Showroom is required</div>
+            </div>
+
+            <div class="col-md-12">
               <label class="form-label">Short Description</label>
               <input class="form-control input-field" formControlName="shortDescription" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('shortDescription')?.invalid &&
+                  (form.get('shortDescription')?.touched || form.get('shortDescription')?.dirty)
+                "
+              >
+                Short Description is required
+              </div>
             </div>
 
             <div class="col-md-12">
@@ -69,6 +130,16 @@
                 rows="3"
                 cols="5"
               ></textarea>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('detailedDescription')?.invalid &&
+                  (form.get('detailedDescription')?.touched ||
+                    form.get('detailedDescription')?.dirty)
+                "
+              >
+                Detailed Description is required
+              </div>
             </div>
           </div>
         </div>
@@ -85,69 +156,175 @@
               <label class="form-label">Fuel Type</label>
               <select class="form-select input-field" formControlName="fuelType">
                 <option value="">Select</option>
-                <option>Petrol</option>
-                <option>Diesel</option>
-                <option>Electric</option>
-                <option>Hybrid</option>
+                <option *ngFor="let type of fuelTypes" [value]="type">{{ type }}</option>
               </select>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('fuelType')?.touched &&
+                  specificationsForm.get('fuelType')?.value == ''
+                "
+              >
+                Fuel Type is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Transmission</label>
               <input class="form-control input-field" formControlName="transmission" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('transmission')?.invalid &&
+                  (specificationsForm.get('transmission')?.touched ||
+                    specificationsForm.get('transmission')?.dirty)
+                "
+              >
+                Transmission is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Body Type</label>
               <select class="form-select input-field" formControlName="bodyType">
-                <option *ngFor="let type of bodyTypeTypes" selected="index=1" [value]="type">
+                <option value="">Select</option>
+                <option *ngFor="let type of bodyTypeTypes" [value]="type">
                   {{ type }}
                 </option>
               </select>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('bodyType')?.touched &&
+                  specificationsForm.get('bodyType')?.value == ''
+                "
+              >
+                Body Type is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Drivetrain</label>
               <select class="form-select input-field" formControlName="drivetrain">
+                <option value="">Select</option>
                 <option *ngFor="let type of driveTrainTypes" [value]="type">{{ type }}</option>
               </select>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('drivetrain')?.touched &&
+                  specificationsForm.get('drivetrain')?.value == ''
+                "
+              >
+                Drivetrain is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Engine</label>
               <input class="form-control input-field" formControlName="engine" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('engine')?.invalid &&
+                  (specificationsForm.get('engine')?.touched ||
+                    specificationsForm.get('engine')?.dirty)
+                "
+              >
+                Engine is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Power (HP)</label>
               <input class="form-control input-field" formControlName="power" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('power')?.invalid &&
+                  (specificationsForm.get('power')?.touched ||
+                    specificationsForm.get('power')?.dirty)
+                "
+              >
+                Power is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Torque (Nm)</label>
               <input class="form-control input-field" formControlName="torque" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('torque')?.invalid &&
+                  (specificationsForm.get('torque')?.touched ||
+                    specificationsForm.get('torque')?.dirty)
+                "
+              >
+                Torque is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Mileage (km/l)</label>
               <input class="form-control input-field" formControlName="mileage" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('mileage')?.invalid &&
+                  (specificationsForm.get('mileage')?.touched ||
+                    specificationsForm.get('mileage')?.dirty)
+                "
+              >
+                Mileage is required
+              </div>
             </div>
 
             <div class="col-md-2">
               <label class="form-label">Top Speed (km/h)</label>
               <input class="form-control input-field" formControlName="topSpeed" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('topSpeed')?.invalid &&
+                  (specificationsForm.get('topSpeed')?.touched ||
+                    specificationsForm.get('topSpeed')?.dirty)
+                "
+              >
+                Top Speed is required
+              </div>
             </div>
 
             <div class="col-md-2">
               <label class="form-label">Acceleration (0-100 km/h)</label>
               <input class="form-control input-field" formControlName="acceleration" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('acceleration')?.invalid &&
+                  (specificationsForm.get('acceleration')?.touched ||
+                    specificationsForm.get('acceleration')?.dirty)
+                "
+              >
+                Acceleration is required
+              </div>
             </div>
 
             <div class="col-md-2">
               <label class="form-label">Seating</label>
               <select class="form-select input-field" formControlName="seating">
+                <option value="0">Select</option>
                 <option *ngFor="let s of [2, 4, 5, 6, 7]" [value]="s">{{ s }} Seater</option>
               </select>
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  specificationsForm.get('seating')?.touched &&
+                  specificationsForm.get('seating')?.value == 0
+                "
+              >
+                Seating is required
+              </div>
             </div>
           </div>
         </div>
@@ -163,26 +340,73 @@
             <div class="col-md-2">
               <label class="form-label">Length (mm)</label>
               <input class="form-control input-field" formControlName="length" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  dimensionsForm.get('length')?.invalid &&
+                  (dimensionsForm.get('length')?.touched || dimensionsForm.get('length')?.dirty)
+                "
+              >
+                Length is required
+              </div>
             </div>
 
             <div class="col-md-2">
               <label class="form-label">Width (mm)</label>
               <input class="form-control input-field" formControlName="width" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  dimensionsForm.get('width')?.invalid &&
+                  (dimensionsForm.get('width')?.touched || dimensionsForm.get('width')?.dirty)
+                "
+              >
+                > Width is required
+              </div>
             </div>
 
             <div class="col-md-2">
               <label class="form-label">Height (mm)</label>
               <input class="form-control input-field" formControlName="height" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  dimensionsForm.get('height')?.invalid &&
+                  (dimensionsForm.get('height')?.touched || dimensionsForm.get('height')?.dirty)
+                "
+              >
+                Height is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Wheelbase (mm)</label>
               <input class="form-control input-field" formControlName="wheelbase" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  dimensionsForm.get('wheelbase')?.invalid &&
+                  (dimensionsForm.get('wheelbase')?.touched ||
+                    dimensionsForm.get('wheelbase')?.dirty)
+                "
+              >
+                Wheelbase is required
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Boot Space (liters)</label>
               <input class="form-control input-field" formControlName="bootSpace" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  dimensionsForm.get('bootSpace')?.invalid &&
+                  (dimensionsForm.get('bootSpace')?.touched ||
+                    dimensionsForm.get('bootSpace')?.dirty)
+                "
+              >
+                Boot Space is required
+              </div>
             </div>
           </div>
         </div>
@@ -191,13 +415,72 @@
 
     <section>
       <div class="col-12">
-        <div class="card section-class shadow-sm" formGroupName="images">
+        <div class="card section-class shadow-sm">
+          <div class="card-header fw-semibold">Features</div>
+
+          <div class="card-body row g-3">
+            <div class="col-mgd-4">
+              <label class="form-label">Features (Comma Separated)</label>
+              <input class="form-control input-field" [value]="featureString" (input)="updateFeatureString($event)" />
+              <div
+                class="text-danger small mt-1"
+                *ngIf="
+                  form.get('features')?.invalid &&
+                  (form.get('features')?.touched || form.get('features')?.dirty)
+                "
+              >
+                Features are required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="col-12">
+        <div class="card section-class shadow-sm">
           <div class="card-header fw-semibold">Images</div>
 
           <div class="card-body row g-3">
             <div class="col-md-4">
-              <label class="form-label">Image URL 1</label>
-              <input class="form-control input-field" formControlName="image1" />
+              <label class="form-label">Vehicle Images</label>
+
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                class="form-control input-field"
+                (change)="onFilesSelected($event)"
+              />
+
+              <button type="button" class="btn btn-primary mt-2" (click)="uploadImages()">
+                Upload Images
+              </button>
+              <div *ngIf="imageUploadingInProgress()" class="mt-2">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Uploading...</span>
+                </div>
+                <span class="ms-2">Uploading images, please wait...</span>
+              </div>
+            </div>
+
+            <div *ngIf="previewUrls().length > 0" class="col-12 d-flex gap-2 flex-wrap mt-3">
+              <div
+                *ngFor="let img of previewUrls(); let i = index"
+                class="position-relative"
+                style="object-fit: contain; width: 200px; height: 200px"
+              >
+                <img [src]="img.imageUrl" width="100" class="rounded shadow-sm" />
+
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm position-absolute top-0 end-0 translate-middle rounded-circle"
+                  (click)="removeVehicleImage(img, i)"
+                >
+                  &times;
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -205,7 +488,7 @@
     </section>
 
     <div class="col-12 text-end">
-      <button type="submit" class="btn btn-primary px-4" [disabled]="form.invalid">
+      <button type="submit" class="btn btn-primary px-4">
         {{ isEditMode ? 'Update Vehicle' : 'Create Vehicle' }}
       </button>
     </div>

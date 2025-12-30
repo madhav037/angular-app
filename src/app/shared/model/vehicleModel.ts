@@ -1,9 +1,9 @@
 export interface vehicleDetails {
-  id: number;
+  id?: number | null;
   name: string;
   model: string;
   year: number;
-  images: string[];
+  images: VehicleImageModel[];
   price: number;
   currency: string;
   ageInShowroom: string;
@@ -33,6 +33,12 @@ export interface vehicleDetails {
   detailedDescription: string;
 }
 
+export interface VehicleImageModel {
+  publicId?: string;
+  imageUrl: string;
+}
+
+
 export interface VehicleFilterDto {
   search?: string;
   inStock?: boolean;
@@ -41,7 +47,7 @@ export interface VehicleFilterDto {
 }
 
 export interface VehicleFormValue {
-  id: number | null;
+  id?: number | null;
   name: string;
   model: string;
   year: number;
@@ -73,3 +79,4 @@ export const currencies: Currency[] = [
 
 export const bodyTypeTypes  = ['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Coupe', 'Wagon', 'Van', 'Truck'];
 export const drivetrainTypes = ['FWD', 'RWD', 'AWD', '4WD'];
+export const fuelTypes = ['Petrol', 'Diesel', 'Electric', 'Hybrid', 'CNG', 'LPG'];

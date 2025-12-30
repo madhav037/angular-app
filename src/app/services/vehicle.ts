@@ -16,6 +16,14 @@ export class Vehicle {
   private _appConfig = inject(APP_CONFIG);
   readonly baseApiUrl = this._appConfig.apiUrl + '/Vehicle';
 
+  createVehicle(payload: vehicleDetails): Observable<any> {
+    return this.http.post<any>(`${this.baseApiUrl}`, payload);
+  }
+
+  editVehicle(id: number, payload: vehicleDetails): Observable<any> {
+    return this.http.put<any>(`${this.baseApiUrl}/${id}`, payload);
+  }
+
   getVehicles(): Observable<vehicleDetails[]> {
     return this.http.get<vehicleDetails[]>(`${this.baseApiUrl}`, { withCredentials: true });
   }

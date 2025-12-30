@@ -14,3 +14,16 @@
   padding: 1rem;
   overflow-y: auto;
 }
+/* Desktop */
+@media (min-width: 768px) {
+  .sidebar {
+    display: block;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+}

@@ -118,7 +118,7 @@
                   @for (image of vehicle.images; let i = $index; track image) {
                   <div class="carousel-item" [class.active]="i === 0">
                     <img
-                      [src]="image"
+                      [src]="image.imageUrl"
                       class="card-img-top d-block w-100"
                       [alt]="vehicle.name"
                       style="height: 250px; object-fit: cover"
@@ -185,7 +185,7 @@
                   <i class="bi bi-arrow-right ms-2"></i>
                 </a>
                 <div class="row gap-2 m-1">
-                  <button *ngIf="isUserAdmin()" (click)="deleteVehicle(vehicle.id, vehicle.name)" class="col btn btn-outline-danger w-100 mt-2">
+                  <button *ngIf="isUserAdmin()" (click)="deleteVehicle(vehicle.id!, vehicle.name)" class="col btn btn-outline-danger w-100 mt-2">
                     Delete Vehicle
                   </button>
                   <a [routerLink]="['/admin/edit', vehicle.id]" *ngIf="isUserAdmin()" class="col btn btn-outline-success w-100 mt-2">

@@ -4,5 +4,5 @@ export const environment = {
   APIURL: 'http://localhost:5107/api',
   ENVIRONMENT: 'development',
   production: false,
-  bypassAuthGuards: true,
+  bypassAuthGuards: false,
 };
