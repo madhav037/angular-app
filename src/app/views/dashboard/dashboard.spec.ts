@@ -1,75 +1,109 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Dashboard } from './dashboard';
-import { Auth } from '../../services/auth';
 import { Vehicle } from '../../services/vehicle';
 import { ToastService } from '../../services/toast';
-import { APP_CONFIG } from '../../injection.token';
+import { Auth } from '../../services/auth';
 import { of } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeIn from '@angular/common/locales/hi';
+import { APP_CONFIG } from '../../injection.token';
 
-describe('Dashboard', () => {
-  let dashboard: Dashboard;
+describe('Dashboard component', () => {
   let fixture: ComponentFixture<Dashboard>;
+  let component: Dashboard;
 
-  const authMock = {
-    isUserAdmin: vi.fn(),
-  };
-
-  const APP_CONFIGMock = {
-    apiUrl: 'http://localhost:5000/api',
-  };
-
-  const vehicleMock = {
-    GetPagedVehicles: vi.fn(),
-    GetFilteredPagedVehicles: vi.fn(),
-    deleteVehicle: vi.fn(),
-  };
-
-  const toastMock = {
-    show : vi.fn(),
-  };
-
-  vehicleMock.GetPagedVehicles.mockReturnValue(
-    of(
-      new HttpResponse({
-        body: [],
-        headers: new Headers({ 'X-Has-Next-Page': 'false' }) as any,
-      })
-    )
-  );
-
-  vehicleMock.GetFilteredPagedVehicles.mockReturnValue(
-    of(
-      new HttpResponse({
-        body: [],
-        headers: new Headers({ 'X-Has-Next-Page': 'false' }) as any,
-      })
-    )
-  );
-
+  let vehicleSpy: jasmine.SpyObj<Vehicle>;
+  let toastSpy: jasmine.SpyObj<ToastService>;
+  let authSpy: jasmine.SpyObj<Auth>;
 
   beforeEach(async () => {
+    registerLocaleData(localeIn);
+    vehicleSpy = jasmine.createSpyObj('Vehicle', [
+      'GetPagedVehicles',
+      'GetFilteredPagedVehicles',
+      'deleteVehicle',
+    ]);
+
+    toastSpy = jasmine.createSpyObj('ToastService', ['show']);
+    authSpy = jasmine.createSpyObj('Auth', ['isUserAdmin']);
+
+    authSpy.isUserAdmin.and.returnValue(of(true));
+
+    vehicleSpy.GetFilteredPagedVehicles.and.returnValue(
+      of(
+        new HttpResponse({
+          body: [],
+          headers: new HttpHeaders({ 'X-Has-Next-Page': 'false' }),
+        })
+      )
+    );
+
+    vehicleSpy.GetPagedVehicles.and.returnValue(
+      of(
+        new HttpResponse({
+          body: [],
+          headers: new HttpHeaders({ 'X-Has-Next-Page': 'false' }),
+        })
+      )
+    );
+
     await TestBed.configureTestingModule({
       imports: [Dashboard],
       providers: [
-        { provide: Auth, useValue: authMock },
-        { provide: Vehicle, useValue: vehicleMock },
-        { provide: ToastService, useValue: toastMock },
-        { provide: APP_CONFIG, useValue: APP_CONFIGMock },
+        {
+          provide: APP_CONFIG,
+          useValue: {
+            apiUrl: 'http://localhost:5000/api',
+          },
+        },
+        { provide: Vehicle, useValue: vehicleSpy },
+        { provide: ToastService, useValue: toastSpy },
+        { provide: Auth, useValue: authSpy },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Dashboard);
-    dashboard = fixture.componentInstance;
-    await fixture.whenStable();
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should change isUserAdmin to true', () => {
-    authMock.isUserAdmin.mockReturnValue(of(true));
+  afterEach(() => {
+    component.ngOnDestroy();
+  });
 
-    dashboard.ngOnInit();
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-    expect(dashboard.isUserAdmin()).toBe(true);
+  it('should set admin flag from auth service', () => {
+    expect(component.isUserAdmin()).toBeTrue();
+  });
+
+  it('should load vehicles on init', () => {
+    expect(vehicleSpy.GetPagedVehicles).toHaveBeenCalled();
+    expect(component.filteredVehicles().length).toBe(0);
+  });
+
+  it('should change page to next', () => {
+    component.changePage('next');
+    expect(component.currentPage()).toBe(2);
+  });
+
+  it('should change page to prev', () => {
+    component.currentPage.set(2);
+    component.changePage('prev');
+    expect(component.currentPage()).toBe(1);
+  });
+
+  it('should delete vehicle when confirmed', () => {
+    spyOn(window, 'confirm').and.returnValue(true);
+
+    vehicleSpy.deleteVehicle.and.returnValue(of(void 0));
+
+    component.deleteVehicle(1, 'Car');
+
+    expect(vehicleSpy.deleteVehicle).toHaveBeenCalledWith(1);
+    expect(toastSpy.show).toHaveBeenCalledWith('Vehicle deleted successfully', 'success');
   });
 });

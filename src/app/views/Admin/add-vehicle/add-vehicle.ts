@@ -19,7 +19,7 @@ import { Auth } from '../../../services/auth';
 import { Vehicle } from '../../../services/vehicle';
 import { ToastService } from '../../../services/toast';
 import { NgIf, NgForOf } from '@angular/common';
-import { ImageService } from '../../../services/image.ts';
+import { ImageService } from '../../../services/image';
 
 @Component({
   selector: 'app-add-vehicle',
