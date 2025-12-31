@@ -11,7 +11,7 @@ import { catchError, EMPTY, switchMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-registeration',
-  imports: [Navbar, RouterLink, ReactiveFormsModule],
+  imports: [ RouterLink, ReactiveFormsModule],
   templateUrl: './registeration.html',
   styleUrl: './registeration.css',
 })
@@ -21,7 +21,7 @@ export class Registeration implements OnInit {
   private toast = inject(ToastService);
 
   roles = Roles;
-  isUserAdmin : boolean = false;
+  isUserAdmin: boolean = false;
 
   registerationForm = new FormGroup(
     {
