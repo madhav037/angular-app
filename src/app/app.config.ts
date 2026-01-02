@@ -13,12 +13,14 @@ import { environment } from '../environment/environment';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { Auth } from './services/auth';
 import { firstValueFrom } from 'rxjs';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    provideNativeDateAdapter(),
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useValue: debugInterceptor, multi: true },

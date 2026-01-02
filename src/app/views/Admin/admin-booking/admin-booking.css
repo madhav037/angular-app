@@ -1,0 +1,21 @@
+.status-select {
+  background: transparent;
+  color: transparent; /* hide text */
+  border: none;
+  width: 12px; /* just enough for caret */
+  padding: 0;
+  margin-left: 4px;
+  cursor: pointer;
+
+  appearance: auto; /* keep native caret */
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+}
+
+.status-select:focus {
+  outline: none;
+}
+
+.status-select option {
+  color: black; /* dropdown text visible */
+}

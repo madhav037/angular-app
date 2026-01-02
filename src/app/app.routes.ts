@@ -38,6 +38,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'booking',
+    loadComponent: () => import('./views/booking-details/booking-details').then((m) => m.BookingDetails),
+    canActivate: [authGuard],
+  },
+  {
     path: 'bigcomponent',
     // component: BigComponent,
     loadComponent: () =>

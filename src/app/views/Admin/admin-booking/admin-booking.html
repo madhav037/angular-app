@@ -1,0 +1,82 @@
+<div *ngIf="loading(); else bookingBoard">
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="spinner-grow text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+<ng-template #bookingBoard>
+  <div *ngIf="!bookingsWithVehicles() || bookingsWithVehicles().length == 0; else bookingsList">
+    <h3 class="text-center fw-bold mt-5">No bookings found.</h3>
+  </div>
+
+  <ng-template #bookingsList>
+    <h2 class="fw-bold text-center m-2">Bookings List</h2>
+
+    <table
+      class="table table-responsive table-striped-columns table-hover table-borderless align-middle text-white"
+      style="width: 95%"
+    >
+      <thead class="table text-white">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Slot ID</th>
+          <th scope="col">Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Vehicle</th>
+          <th scope="col" class="text-center">Options</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let item of bookingsWithVehicles(); index as i" class="text-white">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ item.user!.fullName }}</td>
+          <td>{{ item.booking.slot }}</td>
+          <td>
+            {{
+              formatTime(item.booking.bookingDate, item.booking.bookingStartTime) | date : 'medium'
+            }}
+          </td>
+          <td>
+            {{ item.booking.status }}
+            <select
+              class="text-light px-2 status-select"
+              (change)="updateBookingDetails(item, $event, 'status')"
+            >
+              <option *ngFor="let status of bookingStatuses" [value]="status">{{ status }}</option>
+            </select>
+          </td>
+          <td>
+            {{ item.vehicle.name }}
+            <select
+              class="text-light px-2 status-select"
+              (change)="updateBookingDetails(item, $event, 'vehicle')"
+              *ngIf="item.booking.status == bookingStatuses[bookingStatuses.length - 3]"
+            >
+              <option *ngFor="let vehicle of vehicleNamesWithId()" [value]="vehicle.id">
+                {{ vehicle.vehicleName }}
+              </option>
+            </select>
+          </td>
+          <td class="text-center">
+            <!-- <button
+              class="btn btn-sm btn-success me-2"
+              (click)="updateBookingStatus(item.booking, $event)"
+              [disabled]="item.booking.status === 'CONFIRMED'"
+            >
+              Approve
+            </button> -->
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="deleteBooking(item.booking.bookingId!)"
+              [disabled]="item.booking.status == bookingStatuses[bookingStatuses.length - 3]"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</ng-template>

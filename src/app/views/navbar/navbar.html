@@ -16,6 +16,8 @@
     <div class="d-flex gap-2 align-items-center">
       <span class="text-light fw-bold me-3"> Hello, {{ user.fullName }} </span>
 
+      <nav><a routerLink="/booking" class="btn btn-outline-info btn-sm px-3">Bookings</a></nav>
+
       <button class="btn btn-outline-light btn-sm px-3" (click)="logout()">Logout</button>
     </div>
     } } @else {

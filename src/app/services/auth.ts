@@ -36,6 +36,10 @@ export class Auth {
     return this.http.get<User[]>(`${this.baseApiUrl}`);
   }
 
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.baseApiUrl}/${userId}`);
+  }
+
   setUserRole(role: string) {
     console.log('Setting user role:', role);
     this.userRole$.next(role);

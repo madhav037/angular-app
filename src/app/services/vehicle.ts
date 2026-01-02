@@ -32,6 +32,10 @@ export class Vehicle {
     return this.http.get<vehicleDetails>(`${this.baseApiUrl}/${id}`);
   }
 
+  getVehicleNamesWithId(): Observable<{ id: number; vehicleName: string }[]> {
+    return this.http.get<{ id: number; vehicleName: string }[]>(`${this.baseApiUrl}/names-with-id`);
+  }
+
   filterVehicles(filter: VehicleFilterDto) {
     let params = new HttpParams();
 

@@ -1,0 +1,88 @@
+<div class="modal-dialog modal-xl modal-dialog-centered" >
+  <div class="modal-content border-0">
+    <div class="modal-header border-0">
+      <div>
+        <h5 class="modal-title text-dark fw-bold mb-1">Booking Details</h5>
+        <p class="text-muted small mb-0">Select a date and available slot</p>
+      </div>
+      <!-- <button type="button" class="btn-close" (click)="close(false)" aria-label="Close"></button> -->
+    </div>
+    <div class="modal-body p-4">
+      <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            <div class="mb-3 text-dark text-muted" *ngIf="selectedDate">{{ selectedDate | date:'fullDate' }}</div>
+          <div class="bg-light rounded p-4 d-flex justify-content-center">
+            <mat-calendar class="bg-light rounded" [minDate]="today" (selectedChange)="onDateSelected($event)">
+            </mat-calendar>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div *ngIf="loading()" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted mt-3 mb-0">Loading available slots...</p>
+          </div>
+          <div *ngIf="!loading() && avaliableSlots().length" class="slots-container h-100">
+            <h6 class="text-muted small text-uppercase mb-3">Available Time Slots</h6>
+            <div class="row g-3">
+              @for (slot of avaliableSlots(); track $index) {
+              <div class="col-12">
+                <div
+                  class="card h-100 border cursor-pointer"
+                  [ngClass]="{
+                    'border-success bg-success bg-opacity-10': slot.availableSpots > 8,
+                    'border-warning bg-warning bg-opacity-10':
+                      slot.availableSpots > 2 && slot.availableSpots <= 8,
+                    'border-danger bg-danger bg-opacity-10': slot.availableSpots <= 2
+                  }"
+                  [class.opacity-50]="slot.availableSpots === 0"
+                  (click)="slot.availableSpots > 0 && selectSlot(slot, $index + 1)"
+                  [style.cursor]="slot.availableSpots === 0 ? 'not-allowed' : 'pointer'"
+                >
+                  <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span class="text-dark fw-semibold small me-2">Slot {{ $index + 1 }}</span>
+                        <span class="fw-semibold"
+                          >{{ slot.bookingStartTime }} - {{ slot.bookingEndTime }}</span
+                        >
+                      </div>
+                      <span
+                        class="badge rounded-pill"
+                        [ngClass]="{
+                          'bg-success': slot.availableSpots > 8,
+                          'bg-warning text-dark':
+                            slot.availableSpots > 2 && slot.availableSpots <= 8,
+                          'bg-secondary': slot.availableSpots <= 2
+                        }"
+                      >
+                        {{ slot.availableSpots === 0 ? 'Full' : slot.availableSpots + ' left' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          <div
+            *ngIf="!loading() && !avaliableSlots().length"
+            class="text-center py-5 h-100 d-flex align-items-center justify-content-center"
+          >
+            <div>
+              <p class="text-muted mb-0">No available slots for this date</p>
+              <p class="text-muted small">Please select another date</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row gap-2 w-75 mx-auto">
+      <button type="button" class="btn btn-secondary col" (click)="close(false)">Cancel</button>
+      <button type="button" class="btn btn-primary col" [disabled]="!selectedSlot()" (click)="close(true)">
+        Book Slot {{ selectedSlotIndex() != null ? ' - ' + selectedSlotIndex() : '' }}
+      </button>
+    </div>
+  </div>
+</div>

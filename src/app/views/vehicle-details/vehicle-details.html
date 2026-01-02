@@ -7,7 +7,8 @@
       <h4 class="text-muted">{{ vehicleData()?.model }} - {{ vehicleData()?.year }}</h4>
     </div>
 
-    <nav><a [routerLink]="['']" class="btn btn-secondary text-light"> Contact Us</a></nav>
+    <!-- <nav><a [routerLink]="['/booking']" class="btn btn-secondary text-light"> Book a Ride</a></nav> -->
+    <button (click)="openDialog()" class="btn btn-secondary text-light"> Book a Ride</button>
   </section>
   @if (vehicleData()) {
   <section class="px-5">
@@ -32,7 +33,7 @@
         @for (image of vehicleData()!.images; let i = $index; track image) {
         <div class="carousel-item" [class.active]="i === 0">
           <img
-            [src]="image"
+            [src]="image.imageUrl"
             class="card-img-top d-block w-100"
             [alt]="vehicleData()!.name"
             style="height: 550px; object-fit: cover"

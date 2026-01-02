@@ -1,0 +1,22 @@
+.hover-card {
+  transition: transform 0.8s ease, box-shadow 0.8s ease;
+  cursor: pointer;
+}
+
+.hover-card:hover {
+  transform: translateY(-10px);
+  background-color: #16263e !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-img-top {
+  transition: transform 0.8s ease;
+}
+
+.hover-card:hover .card-img-top {
+  transform: scale(1.2);
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}

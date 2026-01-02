@@ -1,0 +1,104 @@
+<div *ngIf="!bookingsWithVehicles() || bookingsWithVehicles().length == 0; else bookingsList">
+  <h3 class="text-center fw-bold mt-5">No bookings found.</h3>
+</div>
+
+<ng-template #bookingsList>
+  <h2 class="text-center fw-bold my-4">My Bookings</h2>
+  <div class="mx-auto container py-1 px-2">
+    <div class="row g-4">
+      <div *ngFor="let item of bookingsWithVehicles(); index as i" class="col-12 col-sm-6 col-lg-4">
+        <div
+          class="card h-100 shadow-sm border-0 hover-card"
+          id="card-css"
+          style="background-color: #20324b"
+        >
+          <div class="position-relative overflow-hidden">
+            <div id="carousel-{{ item.vehicle.id }}" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                @for (image of item.vehicle.images; let j = $index; track image) {
+                <button
+                  type="button"
+                  [attr.data-bs-target]="'#carousel-' + item.vehicle.id"
+                  [attr.data-bs-slide-to]="j"
+                  [class.active]="j === 0"
+                  aria-current="true"
+                  [attr.aria-label]="'Slide ' + (j + 1)"
+                ></button>
+                }
+              </div>
+              <div class="carousel-inner">
+                @for (image of item.vehicle.images; let i = $index; track image) {
+                <div class="carousel-item" [class.active]="i === 0">
+                  <img
+                    [src]="image.imageUrl"
+                    class="card-img-top d-block w-100"
+                    [alt]="item.vehicle.name"
+                    style="height: 250px; object-fit: cover"
+                  />
+                </div>
+                }
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                [attr.data-bs-target]="'#carousel-' + item.vehicle.id"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                [attr.data-bs-target]="'#carousel-' + item.vehicle.id"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <span
+              class="position-absolute top-0 start-0 m-2 px-2 py-1 rounded"
+              style="
+                background: rgba(0, 0, 0, 0.45);
+                font-size: 0.75rem;
+                backdrop-filter: blur(2px);
+              "
+            >
+              booking ID: {{ item.booking.bookingId }}
+            </span>
+            <span
+              class="position-absolute m-2 badge"
+              [ngClass]="
+                item.booking.status == 'CONFIRMED' || item.booking.status == 'COMPLETED'
+                  ? 'bg-success'
+                  : item.booking.status == 'CANCELLED'
+                  ? 'bg-danger'
+                  : 'bg-warning text-dark'
+              "
+              style="top: 68%; right: 0%"
+            >
+              {{ item.booking.status }}
+            </span>
+            <h5 class="card-title fw-bold mb-3 text-primary text-wrap w-50">
+              {{ item.vehicle.name }} <span class="text-muted">{{ item.vehicle.year }}</span>
+            </h5>
+            <p class="card-text fs-5">
+              {{ item.booking.bookingDate | date }}
+              <small class="fs-6 fw-light text-muted">between </small>
+              {{
+                formatTime(item.booking.bookingDate, item.booking.bookingStartTime)
+                  | date : 'shortTime'
+              }}
+              -
+              {{
+                formatTime(item.booking.bookingDate, item.booking.bookingEndTime)
+                  | date : 'shortTime'
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
