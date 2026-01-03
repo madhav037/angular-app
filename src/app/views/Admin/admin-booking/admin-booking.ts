@@ -77,6 +77,20 @@ export class AdminBooking implements OnInit {
       });
   }
 
+  isUpcomingAndStatusCorrect(item: BookingWithVehicle): boolean {
+    const targetStatus = this.bookingStatuses[this.bookingStatuses.length - 3];
+
+    if (item.booking.status !== targetStatus) {
+      return false;
+    }
+
+    const bookingDateTime = new Date(
+      `${item.booking.bookingDate}T${item.booking.bookingStartTime}`
+    );
+
+    return bookingDateTime > new Date();
+  }
+
   formatTime(date: string, time: string): Date {
     return new Date(`${date}T${time}`);
   }
@@ -85,9 +99,10 @@ export class AdminBooking implements OnInit {
     const select = event.target as HTMLSelectElement;
     console.log('Selected value:', select.value);
     const booking = item.booking;
-
+    let oldConfig = "";
     if (type === 'status') {
       const newStatus = select.value as BookingStatus;
+      oldConfig = booking.status;
       booking.status = newStatus;
     } else if (type === 'vehicle') {
       this.vehicleService.getVehicleById(Number(select.value)).subscribe({
@@ -107,6 +122,7 @@ export class AdminBooking implements OnInit {
       },
       error: () => {
         this.toastService.show('Failed to update booking status', 'error');
+       booking.status = oldConfig as BookingStatus;
       },
     });
   }

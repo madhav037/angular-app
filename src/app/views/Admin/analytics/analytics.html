@@ -1,0 +1,146 @@
+<div class="container">
+  <section class="mb-5">
+    <h4 class="mb-4 text-center">System Analytics Overview</h4>
+    <ng-container *ngIf="systemSummary$ | async as systemSummary; else systemSummaryLoading">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+          <div class="card shadow-sm card-background">
+            <div class="card-body text-center">
+              <h6 class="card-subtitle mb-3 text-muted text-uppercase">Total Users</h6>
+              <h4 class="card-title mb-0 fw-bold text-primary">{{ systemSummary.totalUsers }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+          <div class="card shadow-s card-background">
+            <div class="card-body text-center">
+              <h6 class="card-subtitle mb-3 text-muted text-uppercase">Total Vehicles</h6>
+              <h4 class="card-title mb-0 fw-bold text-primary">
+                {{ systemSummary.totalVehicles }}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+          <div class="card shadow-sm card-background">
+            <div class="card-body text-center">
+              <h6 class="card-subtitle mb-3 text-muted text-uppercase">Total Bookings</h6>
+              <h4 class="card-title mb-0 fw-bold text-primary">
+                {{ systemSummary.totalBookings }}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+          <div class="card shadow-sm card-background">
+            <div class="card-body text-center">
+              <h6 class="card-subtitle mb-3 text-muted text-uppercase">Most Active Booking Date</h6>
+              <h4 class="card-title mb-0 fw-bold text-primary">
+                {{ systemSummary.mostActiveBookingDate }}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-2">
+          <div class="card shadow-sm card-background">
+            <div class="card-body text-center">
+              <h6 class="card-subtitle mb-3 text-muted text-uppercase">Peak Booking Slot</h6>
+              <h4 class="card-title mb-0 fw-bold text-primary">
+                {{ systemSummary.peakBookingSlot }}
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <canvas
+        class="mt-3"
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="'bar'"
+        height="100px"
+      >
+      </canvas>
+    </ng-container>
+    <ng-template #systemSummaryLoading>
+      <div class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Loading analytics…</p>
+      </div>
+    </ng-template>
+  </section>
+
+  <section class="mb-5">
+    <h4 class="mb-4 text-center">Most Booked Vehicles</h4>
+    <ng-container *ngIf="mostBookedVehicle$ | async as vehicleStats; else vehicleStatsLoading">
+      <div class="row justify-content-center align-items-start g-4">
+        <div class="col-12 col-md-5 col-lg-4">
+          <div class="card shadow-sm card-background h-100">
+            <div class="card-body text-center">
+              <h6 class="text-muted text-uppercase mb-3">Most Booked Vehicle</h6>
+              <h4 class="fw-bold text-primary mb-2">
+                {{ vehicleStats.mostBookedVehicleName! }}
+              </h4>
+              <div class="border-top pt-3 mt-3">
+                <h6 class="text-muted text-uppercase mb-1">Total Bookings</h6>
+                <h4 class="fw-bold text-primary">
+                  {{ vehicleStats.bookingCount }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-7 col-lg-6 text-center">
+          <div class="mb-3">
+            <label class="form-label text-muted fw-semibold"> Select Vehicle </label>
+            <select
+              class="form-select status-select mx-auto"
+              style="max-width: 260px"
+              (change)="changeVehicleStat($event)"
+            >
+              <option value="" disabled selected>Select Vehicle</option>
+              <option *ngFor="let vehicle of vehicleNamesWithId()" [value]="vehicle.id">
+                {{ vehicle.vehicleName }}
+              </option>
+            </select>
+          </div>
+          @if (!areVehicleStatsAvailable() && !areStatsLoading()) {
+          <h6 class="mt-4 text-muted">Booking statistics for selected vehicle are not available</h6>
+          } @else if (areStatsLoading()) {
+          <div class="text-center my-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">Loading stats...</p>
+          </div>
+          } @else {
+          <div class="mx-auto" style="height: 220px; max-width: 260px">
+            <canvas baseChart [data]="pieChartData" [type]="'doughnut'"></canvas>
+          </div>
+          }
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #vehicleStatsLoading>
+      <div class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Loading analytics…</p>
+      </div>
+    </ng-template>
+  </section>
+
+  <!-- <section class="mb-5">
+    <h4 class="mb-4 text-center">Monthly Analytics</h4>
+    <ng-container
+      *ngIf="
+        currentMonthAnalytics$ | async as currentMonthAnalytics;
+        else currentMonthAnalyticsLoading
+      "
+    >
+    </ng-container>
+    <ng-template #currentMonthAnalyticsLoading>
+      <div class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Loading analytics…</p>
+      </div>
+    </ng-template>
+  </section> -->
+</div>

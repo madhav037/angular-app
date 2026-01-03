@@ -14,6 +14,7 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { Auth } from './services/auth';
 import { firstValueFrom } from 'rxjs';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,6 +38,7 @@ export const appConfig: ApplicationConfig = {
       deps: [Auth],
       multi: true,
     },
+    provideCharts(withDefaultRegisterables()),
   ],
 };
 

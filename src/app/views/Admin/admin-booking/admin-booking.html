@@ -52,7 +52,9 @@
             <select
               class="text-light px-2 status-select"
               (change)="updateBookingDetails(item, $event, 'vehicle')"
-              *ngIf="item.booking.status == bookingStatuses[bookingStatuses.length - 3]"
+              *ngIf="
+                isUpcomingAndStatusCorrect(item)
+              "
             >
               <option *ngFor="let vehicle of vehicleNamesWithId()" [value]="vehicle.id">
                 {{ vehicle.vehicleName }}

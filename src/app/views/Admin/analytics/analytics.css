@@ -1,0 +1,29 @@
+.card-background {
+  background-color: rgb(39, 66, 106);
+  /* transition: transform 0.8s ease, box-shadow 0.8s ease; */
+}
+
+.card-background :hover {
+  background-color: rgb(30, 51, 83);
+}
+
+.status-select {
+  background-color: rgb(39, 66, 106);
+  color: white;
+  border: none;
+  padding: 15px;
+  margin: 10px;
+  cursor: pointer;
+
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+}
+
+.status-select:focus {
+  outline: none;
+}
+
+.status-select option {
+  color: white;
+}

@@ -1,23 +1,28 @@
 <div class="p-2 ms-4">
-    <header class="mb-4 border-bottom pb-3 justify-content-center align-self-center d-flex align-content-center">
-        <h3 class="text-white text-">Admin Panel</h3>
-    </header>
-    <a class="btn btn-outline-info mt-3" [routerLink]="['/admin/dashboard']">Dashboard</a>
-    <a class="btn btn-outline-info mt-3" [routerLink]="['/admin/add-vehicle']">Add Vehicle</a>
-    <a class="btn btn-outline-info mt-3" [routerLink]="['/admin/manage-users']">Manage Users</a>
-    <a class="btn btn-outline-info mt-3" [routerLink]="['/admin/manage-bookings']">Manage Bookings</a>
+  <header
+    class="mb-4 border-bottom pb-3 justify-content-center align-self-center d-flex flex-column align-content-center"
+  >
+    <h3 class="text-white text-">Admin Panel</h3>
+  </header>
+  <nav class="row row-cols-1 w-100">
+    <a class="btn btn-outline-info mt-3 col" [routerLink]="['/admin/analytics']">Analytics</a>
+    <a class="btn btn-outline-info mt-3 col" [routerLink]="['/admin/dashboard']">Dashboard</a>
+    <a class="btn btn-outline-info mt-3 col" [routerLink]="['/admin/add-vehicle']">Add Vehicle</a>
+    <a class="btn btn-outline-info mt-3 col" [routerLink]="['/admin/manage-users']">Manage Users</a>
+    <a class="btn btn-outline-info mt-3 col" [routerLink]="['/admin/manage-bookings']">Manage Bookings</a>
+  </nav>
 </div>
 
 <!-- Collapsible Content
 <div class="collapse navbar-expand-md" id="navbarToggleExternalContent">
   <div class=" p-4"> -->
-    <!-- Admin Panel Header -->
-    <!-- <header class="mb-4 border-bottom pb-3 d-flex justify-content-center">
+<!-- Admin Panel Header -->
+<!-- <header class="mb-4 border-bottom pb-3 d-flex justify-content-center">
       <h5 class="text-white">Admin Panel</h5>
     </header> -->
 
-    <!-- Admin Links -->
-    <!-- <div class="d-flex flex-column">
+<!-- Admin Links -->
+<!-- <div class="d-flex flex-column">
       <a
         class="btn btn-outline-info mb-2"
         routerLink="/admin/dashboard"
